@@ -4,45 +4,16 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-          <a-col :xl="10" :lg="11" :md="12" :sm="24">
-            <a-form-item label="创建日期">
-              <j-date :show-time="true" date-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择开始时间" class="query-group-cust" v-model="queryParam.createTime_begin"></j-date>
-              <span class="query-group-split-cust"></span>
-              <j-date :show-time="true" date-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择结束时间" class="query-group-cust" v-model="queryParam.createTime_end"></j-date>
+          <a-col :xl="6" :lg="7" :md="8" :sm="24">
+            <a-form-item label="仓库名称">
+              <a-input placeholder="请输入仓库名称" v-model="queryParam.houseName"></a-input>
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
-            <a-form-item label="产品大类">
-              <j-popup placeholder="请选择产品大类" v-model="queryParam.productClass" code="sto_mater_info" org-fields="product_name,product_class,mat_len,mat_width,mat_thick" dest-fields="product_name,product_class,mat_len,mat_width,mat_thick" :field="getPopupField('product_name,product_class,mat_len,mat_width,mat_thick')"/>
+            <a-form-item label="仓库地址">
+              <a-input placeholder="请输入仓库地址" v-model="queryParam.address"></a-input>
             </a-form-item>
           </a-col>
-          <template v-if="toggleSearchStatus">
-            <a-col :xl="6" :lg="7" :md="8" :sm="24">
-              <a-form-item label="材料名称">
-                <a-input placeholder="请输入材料名称" v-model="queryParam.productName"></a-input>
-              </a-form-item>
-            </a-col>
-            <a-col :xl="6" :lg="7" :md="8" :sm="24">
-              <a-form-item label="材料长度">
-                <a-input placeholder="请输入材料长度" v-model="queryParam.matLen"></a-input>
-              </a-form-item>
-            </a-col>
-            <a-col :xl="6" :lg="7" :md="8" :sm="24">
-              <a-form-item label="材料厚度">
-                <a-input placeholder="请输入材料厚度" v-model="queryParam.matThick"></a-input>
-              </a-form-item>
-            </a-col>
-            <a-col :xl="6" :lg="7" :md="8" :sm="24">
-              <a-form-item label="材料宽度">
-                <a-input placeholder="请输入材料宽度" v-model="queryParam.matWidth"></a-input>
-              </a-form-item>
-            </a-col>
-            <a-col :xl="6" :lg="7" :md="8" :sm="24">
-              <a-form-item label="材料号">
-                <a-input placeholder="请输入材料号" v-model="queryParam.matNo"></a-input>
-              </a-form-item>
-            </a-col>
-          </template>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
@@ -61,7 +32,7 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('材料入库')">导出</a-button>
+      <a-button type="primary" icon="download" @click="handleExportXls('仓库管理')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
@@ -138,7 +109,7 @@
       </a-table>
     </div>
 
-    <enter-house-modal ref="modalForm" @ok="modalFormOk"></enter-house-modal>
+    <warehouse-modal ref="modalForm" @ok="modalFormOk"></warehouse-modal>
   </a-card>
 </template>
 
@@ -147,21 +118,19 @@
   import '@/assets/less/TableExpand.less'
   import { mixinDevice } from '@/utils/mixin'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
-  import EnterHouseModal from './modules/EnterHouseModal'
-  import JDate from '@/components/jeecg/JDate.vue'
+  import WarehouseModal from './modules/WarehouseModal'
   import JSuperQuery from '@/components/jeecg/JSuperQuery.vue'
 
   export default {
-    name: 'EnterHouseList',
+    name: 'WarehouseList',
     mixins:[JeecgListMixin, mixinDevice],
     components: {
-      JDate,
-      EnterHouseModal,
+      WarehouseModal,
       JSuperQuery,
     },
     data () {
       return {
-        description: '材料入库管理页面',
+        description: '仓库管理管理页面',
         // 表头
         columns: [
           {
@@ -175,54 +144,29 @@
             }
           },
           {
-            title:'创建日期',
+            title:'仓库名称',
             align:"center",
-            dataIndex: 'createTime'
+            dataIndex: 'houseName'
           },
           {
-            title:'产品大类',
+            title:'仓库地址',
             align:"center",
-            dataIndex: 'productClass_dictText'
+            dataIndex: 'address'
           },
           {
-            title:'材料名称',
+            title:'仓库负责人',
             align:"center",
-            dataIndex: 'productName'
+            dataIndex: 'houseMan'
           },
           {
-            title:'材料长度',
+            title:'负责人联系号码',
             align:"center",
-            dataIndex: 'matLen'
+            dataIndex: 'phone'
           },
           {
-            title:'材料厚度',
+            title:'占地面积',
             align:"center",
-            dataIndex: 'matThick'
-          },
-          {
-            title:'材料宽度',
-            align:"center",
-            dataIndex: 'matWidth'
-          },
-          {
-            title:'材料重量',
-            align:"center",
-            dataIndex: 'matWeight'
-          },
-          {
-            title:'材料数量',
-            align:"center",
-            dataIndex: 'matNumber'
-          },
-          {
-            title:'材料号',
-            align:"center",
-            dataIndex: 'matNo'
-          },
-          {
-            title:'仓库',
-            align:"center",
-            dataIndex: 'warehouse_dictText'
+            dataIndex: 'area'
           },
           {
             title: '操作',
@@ -234,11 +178,11 @@
           }
         ],
         url: {
-          list: "/sto/enterHouse/list",
-          delete: "/sto/enterHouse/delete",
-          deleteBatch: "/sto/enterHouse/deleteBatch",
-          exportXlsUrl: "/sto/enterHouse/exportXls",
-          importExcelUrl: "sto/enterHouse/importExcel",
+          list: "/sto/warehouse/list",
+          delete: "/sto/warehouse/delete",
+          deleteBatch: "/sto/warehouse/deleteBatch",
+          exportXlsUrl: "/sto/warehouse/exportXls",
+          importExcelUrl: "sto/warehouse/importExcel",
           
         },
         dictOptions:{},
@@ -258,16 +202,11 @@
       },
       getSuperFieldList(){
         let fieldList=[];
-        fieldList.push({type:'datetime',value:'createTime',text:'创建日期'})
-        fieldList.push({type:'popup',value:'productClass',text:'产品大类', popup:{code:'sto_mater_info',field:'product_name',orgFields:'product_name',destFields:'product_name'}})
-        fieldList.push({type:'string',value:'productName',text:'材料名称',dictCode:''})
-        fieldList.push({type:'BigDecimal',value:'matLen',text:'材料长度',dictCode:''})
-        fieldList.push({type:'BigDecimal',value:'matThick',text:'材料厚度',dictCode:''})
-        fieldList.push({type:'BigDecimal',value:'matWidth',text:'材料宽度',dictCode:''})
-        fieldList.push({type:'BigDecimal',value:'matWeight',text:'材料重量',dictCode:''})
-        fieldList.push({type:'int',value:'matNumber',text:'材料数量',dictCode:''})
-        fieldList.push({type:'string',value:'matNo',text:'材料号',dictCode:''})
-        fieldList.push({type:'string',value:'warehouse',text:'仓库',dictCode:''})
+        fieldList.push({type:'string',value:'houseName',text:'仓库名称',dictCode:''})
+        fieldList.push({type:'string',value:'address',text:'仓库地址',dictCode:''})
+        fieldList.push({type:'string',value:'houseMan',text:'仓库负责人',dictCode:''})
+        fieldList.push({type:'string',value:'phone',text:'负责人联系号码',dictCode:''})
+        fieldList.push({type:'BigDecimal',value:'area',text:'占地面积',dictCode:''})
         this.superFieldList = fieldList
       }
     }

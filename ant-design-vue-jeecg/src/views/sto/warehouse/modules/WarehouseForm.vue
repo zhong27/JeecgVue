@@ -4,55 +4,28 @@
       <a-form :form="form" slot="detail">
         <a-row>
           <a-col :span="12">
-            <a-form-item label="产品大类" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-popup
-                v-decorator="['productClass', validatorRules.productClass]"
-                :trigger-change="true"
-                org-fields="product_name,product_class,mat_len,mat_width,mat_thick"
-                dest-fields="productName,productClass,matLen,matWidth,matThick"
-                code="sto_mater_info"
-                @callback="popupCallback"
-                />
+            <a-form-item label="仓库名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['houseName', validatorRules.houseName]" placeholder="请输入仓库名称"  ></a-input>
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item label="材料名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['productName', validatorRules.productName]" placeholder="请输入材料名称"  ></a-input>
+            <a-form-item label="仓库地址" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['address', validatorRules.address]" placeholder="请输入仓库地址"  ></a-input>
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item label="材料长度" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['matLen', validatorRules.matLen]" placeholder="请输入材料长度" style="width: 100%" />
+            <a-form-item label="仓库负责人" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['houseMan', validatorRules.houseMan]" placeholder="请输入仓库负责人"  ></a-input>
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item label="材料厚度" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['matThick', validatorRules.matThick]" placeholder="请输入材料厚度" style="width: 100%" />
+            <a-form-item label="负责人联系号码" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['phone', validatorRules.phone]" placeholder="请输入负责人联系号码"  ></a-input>
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item label="材料宽度" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['matWidth', validatorRules.matWidth]" placeholder="请输入材料宽度" style="width: 100%" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="材料重量" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['matWeight']" placeholder="请输入材料重量" style="width: 100%" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="材料数量" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['matNumber']" placeholder="请输入材料数量" style="width: 100%" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="材料号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['matNo', validatorRules.matNo]" placeholder="请输入材料号"  ></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="仓库" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-dict-select-tag v-decorator="['warehouse']" :trigger-change="true" dictCode="sto_warehouse,house_name,id" placeholder="请输入仓库"  ></j-dict-select-tag>
+            <a-form-item label="占地面积" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input-number v-decorator="['area']" placeholder="请输入占地面积" style="width: 100%" />
             </a-form-item>
           </a-col>
           <a-col v-if="showFlowSubmitButton" :span="24" style="text-align: center">
@@ -70,13 +43,11 @@
   import pick from 'lodash.pick'
   import { validateDuplicateValue } from '@/utils/util'
   import JFormContainer from '@/components/jeecg/JFormContainer'
-  import JDictSelectTag from '@/components/dict/JDictSelectTag.vue'
 
   export default {
-    name: 'EnterHouseForm',
+    name: 'WarehouseForm',
     components: {
       JFormContainer,
-      JDictSelectTag,
     },
     props: {
       //流程表单data
@@ -112,41 +83,31 @@
         },
         confirmLoading: false,
         validatorRules: {
-          productClass: {
+          houseName: {
             rules: [
-              { required: true, message: '请输入产品大类!'},
+              { required: true, message: '请输入仓库名称!'},
             ]
           },
-          productName: {
+          address: {
             rules: [
-              { required: true, message: '请输入材料名称!'},
+              { required: true, message: '请输入仓库地址!'},
             ]
           },
-          matLen: {
+          houseMan: {
             rules: [
-              { required: true, message: '请输入材料长度!'},
+              { required: true, message: '请输入仓库负责人!'},
             ]
           },
-          matThick: {
+          phone: {
             rules: [
-              { required: true, message: '请输入材料厚度!'},
-            ]
-          },
-          matWidth: {
-            rules: [
-              { required: true, message: '请输入材料宽度!'},
-            ]
-          },
-          matNo: {
-            rules: [
-              { required: true, message: '请输入材料号!'},
+              { required: true, message: '请输入负责人联系号码!'},
             ]
           },
         },
         url: {
-          add: "/sto/enterHouse/add",
-          edit: "/sto/enterHouse/edit",
-          queryById: "/sto/enterHouse/queryById"
+          add: "/sto/warehouse/add",
+          edit: "/sto/warehouse/edit",
+          queryById: "/sto/warehouse/queryById"
         }
       }
     },
@@ -182,7 +143,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'createTime','productClass','productName','matLen','matThick','matWidth','matWeight','matNumber','matNo','warehouse'))
+          this.form.setFieldsValue(pick(this.model,'houseName','address','houseMan','phone','area'))
         })
       },
       //渲染流程表单数据
@@ -228,7 +189,7 @@
         })
       },
       popupCallback(row){
-        this.form.setFieldsValue(pick(row,'createTime','productClass','productName','matLen','matThick','matWidth','matWeight','matNumber','matNo','warehouse'))
+        this.form.setFieldsValue(pick(row,'houseName','address','houseMan','phone','area'))
       },
     }
   }
