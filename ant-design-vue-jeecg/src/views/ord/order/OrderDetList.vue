@@ -1,0 +1,237 @@
+<template>
+  <a-card :bordered="false" :class="'cust-erp-sub-tab'">
+    <!-- 操作按钮区域 -->
+    <div class="table-operator" v-if="mainId">
+      <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
+      <a-button type="primary" icon="download" @click="handleExportXls('订单明细表')">导出</a-button>
+      <a-upload
+        name="file"
+        :showUploadList="false"
+        :multiple="false"
+        :headers="tokenHeader"
+        :action="importExcelUrl"
+        @change="handleImportExcel">
+          <a-button type="primary" icon="import">导入</a-button>
+      </a-upload>
+      <!-- 高级查询区域 -->
+      <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>
+      <a-dropdown v-if="selectedRowKeys.length > 0">
+        <a-menu slot="overlay">
+          <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
+        </a-menu>
+        <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /></a-button>
+      </a-dropdown>
+    </div>
+
+    <!-- table区域-begin -->
+    <div>
+      <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+        <a style="margin-left: 24px" @click="onClearSelected">清空</a>
+      </div>
+
+      <a-table
+        ref="table"
+        size="middle"
+        bordered
+        rowKey="id"
+        :scroll="{x:true}"
+        :columns="columns"
+        :dataSource="dataSource"
+        :pagination="ipagination"
+        :loading="loading"
+        :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
+        @change="handleTableChange">
+
+        <template slot="htmlSlot" slot-scope="text">
+          <div v-html="text"></div>
+        </template>
+        <template slot="imgSlot" slot-scope="text">
+          <span v-if="!text" style="font-size: 12px;font-style: italic;">无图片</span>
+          <img v-else :src="getImgView(text)" height="25px" alt="" style="max-width:80px;font-size: 12px;font-style: italic;"/>
+        </template>
+        <template slot="fileSlot" slot-scope="text">
+          <span v-if="!text" style="font-size: 12px;font-style: italic;">无文件</span>
+          <a-button
+            v-else
+            :ghost="true"
+            type="primary"
+            icon="download"
+            size="small"
+            @click="downloadFile(text)">
+            下载
+          </a-button>
+        </template>
+
+        <span slot="action" slot-scope="text, record">
+          <a @click="handleEdit(record)">编辑</a>
+          <a-divider type="vertical" />
+          <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
+            <a>删除</a>
+          </a-popconfirm>
+        </span>
+
+      </a-table>
+    </div>
+
+    <orderDet-modal ref="modalForm" @ok="modalFormOk" :mainId="mainId"></orderDet-modal>
+  </a-card>
+</template>
+
+<script>
+
+  import { JeecgListMixin } from '@/mixins/JeecgListMixin'
+  import OrderDetModal from './modules/OrderDetModal'
+  import JSuperQuery from '@/components/jeecg/JSuperQuery.vue'
+
+
+  export default {
+    name: "OrderDetList",
+    mixins:[JeecgListMixin],
+    components: { OrderDetModal,JSuperQuery },
+    props:{
+      mainId:{
+        type:String,
+        default:'',
+        required:false
+      }
+    },
+    watch:{
+      mainId:{
+        immediate: true,
+        handler(val) {
+          if(!this.mainId){
+            this.clearList()
+          }else{
+            this.queryParam['orderId'] = val
+            this.loadData(1);
+          }
+        }
+      }
+    },
+    data () {
+      return {
+        description: '订单预定管理页面',
+        disableMixinCreated:true,
+        // 表头
+        columns: [
+          {
+            title: '#',
+            dataIndex: '',
+            key:'rowIndex',
+            width:60,
+            align:"center",
+            customRender:function (t,r,index) {
+              return parseInt(index)+1;
+            }
+          },
+          {
+            title:'创建日期',
+            align:"center",
+            dataIndex: 'createTime'
+          },
+          {
+            title:'材料名称',
+            align:"center",
+            dataIndex: 'productName'
+          },
+          {
+            title:'产品大类',
+            align:"center",
+            dataIndex: 'productClass_dictText',
+          },
+          {
+            title:'材料长度',
+            align:"center",
+            dataIndex: 'matLen'
+          },
+          {
+            title:'材料宽度',
+            align:"center",
+            dataIndex: 'matWidth'
+          },
+          {
+            title:'材料厚度',
+            align:"center",
+            dataIndex: 'matThick'
+          },
+          {
+            title:'材料号',
+            align:"center",
+            dataIndex: 'matNo'
+          },
+          {
+            title:'仓库',
+            align:"center",
+            dataIndex: 'warehouse_dictText',
+          },
+          {
+            title:'单价',
+            align:"center",
+            dataIndex: 'price'
+          },
+          {
+            title:'数量',
+            align:"center",
+            dataIndex: 'num'
+          },
+          {
+            title:'总价',
+            align:"center",
+            dataIndex: 'total'
+          },
+          {
+            title: '操作',
+            dataIndex: 'action',
+            align:"center",
+            fixed:"right",
+            width:147,
+            scopedSlots: { customRender: 'action' },
+          }
+        ],
+        url: {
+          list: "/ord/orderBooking/listOrderDetByMainId",
+          delete: "/ord/orderBooking/deleteOrderDet",
+          deleteBatch: "/ord/orderBooking/deleteBatchOrderDet",
+          exportXlsUrl: "/ord/orderBooking/exportOrderDet",
+          importUrl: "/ord/orderBooking/importOrderDet",
+        },
+        dictOptions:{
+         customer:[],
+         payStatus:[],
+        },
+        superFieldList:[],
+      }
+    },
+    created() {
+      this.getSuperFieldList();
+    },
+    computed: {
+      importExcelUrl(){
+        return `${window._CONFIG['domianURL']}/${this.url.importUrl}/${this.mainId}`;
+      }
+    },
+    methods: {
+      clearList(){
+        this.dataSource=[]
+        this.selectedRowKeys=[]
+        this.ipagination.current = 1
+      },
+      getSuperFieldList(){
+        let fieldList=[];
+        fieldList.push({type:'datetime',value:'createTime',text:'创建日期'})
+        fieldList.push({type:'string',value:'customer',text:'客户名称',dictCode:'per_customer,customer_name,id'})
+        fieldList.push({type:'string',value:'orderNo',text:'订单编号',dictCode:''})
+        fieldList.push({type:'BigDecimal',value:'orderTotal',text:'订单总价',dictCode:''})
+        fieldList.push({type:'string',value:'driver',text:'司机',dictCode:''})
+        fieldList.push({type:'string',value:'carNo',text:'车牌号',dictCode:''})
+        fieldList.push({type:'string',value:'phone',text:'电话号码',dictCode:''})
+        fieldList.push({type:'string',value:'payStatus',text:'支付状态',dictCode:'pay_status'})
+        this.superFieldList = fieldList
+      }
+    }
+  }
+</script>
+<style scoped>
+  @import '~@assets/less/common.less'
+</style>
