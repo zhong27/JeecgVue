@@ -157,6 +157,11 @@
             dataIndex: 'sex_dictText'
           },
           {
+            title:'年龄',
+            align:"center",
+            dataIndex: 'age'
+          },
+          {
             title:'生日',
             align:"center",
             dataIndex: 'birth',

@@ -28,6 +28,11 @@
               <a-input-number v-decorator="['matWidth']" placeholder="请输入材料宽度" style="width: 100%" />
             </a-form-item>
           </a-col>
+          <a-col :span="24">
+            <a-form-item label="材料号" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['matNo']" placeholder="请输入材料号" style="width: 100%" />
+            </a-form-item>
+          </a-col>
           <a-col v-if="showFlowSubmitButton" :span="24" style="text-align: center">
             <a-button @click="submitForm">提 交</a-button>
           </a-col>
@@ -135,7 +140,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'createTime','productClass','productName','matLen','matThick','matWidth'))
+          this.form.setFieldsValue(pick(this.model,'createTime','productClass','productName','matLen','matThick','matWidth','matNo'))
         })
       },
       //渲染流程表单数据
@@ -181,7 +186,7 @@
         })
       },
       popupCallback(row){
-        this.form.setFieldsValue(pick(row,'createTime','productClass','productName','matLen','matThick','matWidth'))
+        this.form.setFieldsValue(pick(row,'createTime','productClass','productName','matLen','matThick','matWidth','matNo'))
       },
     }
   }

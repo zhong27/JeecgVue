@@ -23,11 +23,13 @@
               <a-input v-decorator="['phone', validatorRules.phone]" placeholder="请输入联系电话"  ></a-input>
             </a-form-item>
           </a-col>
+<!--
           <a-col :span="24">
             <a-form-item label="年龄" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input-number v-decorator="['age']" placeholder="请输入年龄" style="width: 100%" />
             </a-form-item>
           </a-col>
+-->
           <a-col v-if="showFlowSubmitButton" :span="24" style="text-align: center">
             <a-button @click="submitForm">提 交</a-button>
           </a-col>
