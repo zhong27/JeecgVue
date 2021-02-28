@@ -10,7 +10,7 @@
           </a-col>
           <a-col :span="12">
             <a-form-item label="来款金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['incom', validatorRules.incom]" placeholder="请输入来款金额" style="width: 100%" />
+              <a-input-number v-decorator="['income', validatorRules.income]" placeholder="请输入来款金额" style="width: 100%" />
             </a-form-item>
           </a-col>
           <a-col :span="12">
@@ -20,7 +20,8 @@
           </a-col>
           <a-col :span="12">
             <a-form-item label="审核状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['status']" placeholder="请输入审核状态"  ></a-input>
+              <j-dict-select-tag disabled v-decorator="['status', validatorRules.status]" placeholder="请输入审核状态" :trigger-change="true"
+                                 dictCode="check_status"  ></j-dict-select-tag>
             </a-form-item>
           </a-col>
           <a-col :span="12">
@@ -97,7 +98,7 @@
               { required: true, message: '请输入客户!'},
             ]
           },
-          incom: {
+          income: {
             rules: [
               { required: true, message: '请输入来款金额!'},
             ]
@@ -105,6 +106,11 @@
           bank: {
             rules: [
               { required: true, message: '请输入来款银行!'},
+            ]
+          },
+          status: {
+            initialValue:"unfinish",
+            rules: [
             ]
           },
         },
@@ -147,7 +153,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'customerName','incom','bank','status','incomeDate','remark'))
+          this.form.setFieldsValue(pick(this.model,'customerName','income','bank','status','incomeDate','remark'))
         })
       },
       //渲染流程表单数据
@@ -193,7 +199,7 @@
         })
       },
       popupCallback(row){
-        this.form.setFieldsValue(pick(row,'customerName','incom','bank','status','incomeDate','remark'))
+        this.form.setFieldsValue(pick(row,'customerName','income','bank','status','incomeDate','remark'))
       },
     }
   }

@@ -6,7 +6,8 @@
         <a-row :gutter="24">
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="客户">
-              <j-dict-select-tag placeholder="请选择客户" v-model="queryParam.customerName" dictCode="per_customer,customer_name,id"/>
+              <j-dict-select-tag placeholder="请选择客户" v-model="queryParam.customerName"
+                                 dictCode="per_customer,customer_name,id"/>
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
@@ -33,23 +34,31 @@
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
       <a-button type="primary" icon="download" @click="handleExportXls('来款管理')">导出</a-button>
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
+                @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
       <!-- 高级查询区域 -->
-      <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>
+      <j-super-query :fieldList="superFieldList" ref="superQueryModal"
+                     @handleSuperQuery="handleSuperQuery"></j-super-query>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
-          <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
+          <a-menu-item key="1" @click="batchDel">
+            <a-icon type="delete"/>
+            删除
+          </a-menu-item>
         </a-menu>
-        <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /></a-button>
+        <a-button style="margin-left: 8px"> 批量操作
+          <a-icon type="down"/>
+        </a-button>
       </a-dropdown>
     </div>
 
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{
+        selectedRowKeys.length }}</a>项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -72,7 +81,8 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px;font-style: italic;">无图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="" style="max-width:80px;font-size: 12px;font-style: italic;"/>
+          <img v-else :src="getImgView(text)" height="25px" alt=""
+               style="max-width:80px;font-size: 12px;font-style: italic;"/>
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px;font-style: italic;">无文件</span>
@@ -88,11 +98,12 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">编辑</a>
+          <!--<a @click="handleEdit(record)">编辑</a>-->
+          <a @click="checkIncome(record.id)">审核</a>
 
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a @click="handleDetail(record)">详情</a>
@@ -120,18 +131,19 @@
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
   import CashIncomeModal from './modules/CashIncomeModal'
   import JDictSelectTag from '@/components/dict/JDictSelectTag.vue'
-  import {filterMultiDictText} from '@/components/dict/JDictSelectUtil'
+  import { filterMultiDictText } from '@/components/dict/JDictSelectUtil'
   import JSuperQuery from '@/components/jeecg/JSuperQuery.vue'
+  import { httpAction, getAction } from '@/api/manage'
 
   export default {
     name: 'CashIncomeList',
-    mixins:[JeecgListMixin, mixinDevice],
+    mixins: [JeecgListMixin, mixinDevice],
     components: {
       JDictSelectTag,
       CashIncomeModal,
-      JSuperQuery,
+      JSuperQuery
     },
-    data () {
+    data() {
       return {
         description: '来款管理管理页面',
         // 表头
@@ -139,87 +151,104 @@
           {
             title: '#',
             dataIndex: '',
-            key:'rowIndex',
-            width:60,
-            align:"center",
-            customRender:function (t,r,index) {
-              return parseInt(index)+1;
+            key: 'rowIndex',
+            width: 60,
+            align: 'center',
+            customRender: function(t, r, index) {
+              return parseInt(index) + 1
             }
           },
           {
-            title:'客户',
-            align:"center",
+            title: '客户',
+            align: 'center',
             dataIndex: 'customerName_dictText'
           },
           {
-            title:'来款金额',
-            align:"center",
-            dataIndex: 'incom'
+            title: '来款金额',
+            align: 'center',
+            dataIndex: 'income'
           },
           {
-            title:'来款银行',
-            align:"center",
+            title: '来款银行',
+            align: 'center',
             dataIndex: 'bank_dictText'
           },
           {
-            title:'审核状态',
-            align:"center",
-            dataIndex: 'status'
+            title: '审核状态',
+            align: 'center',
+            dataIndex: 'status_dictText'
           },
           {
-            title:'来款日期',
-            align:"center",
+            title: '来款日期',
+            align: 'center',
             dataIndex: 'incomeDate',
-            customRender:function (text) {
-              return !text?"":(text.length>10?text.substr(0,10):text)
+            customRender: function(text) {
+              return !text ? '' : (text.length > 10 ? text.substr(0, 10) : text)
             }
           },
           {
-            title:'备注',
-            align:"center",
+            title: '备注',
+            align: 'center',
             dataIndex: 'remark'
           },
           {
             title: '操作',
             dataIndex: 'action',
-            align:"center",
-            fixed:"right",
-            width:147,
+            align: 'center',
+            fixed: 'right',
+            width: 147,
             scopedSlots: { customRender: 'action' }
           }
         ],
         url: {
-          list: "/cash/cashIncome/list",
-          delete: "/cash/cashIncome/delete",
-          deleteBatch: "/cash/cashIncome/deleteBatch",
-          exportXlsUrl: "/cash/cashIncome/exportXls",
-          importExcelUrl: "cash/cashIncome/importExcel",
-          
+          list: '/cash/cashIncome/list',
+          delete: '/cash/cashIncome/delete',
+          deleteBatch: '/cash/cashIncome/deleteBatch',
+          exportXlsUrl: '/cash/cashIncome/exportXls',
+          importExcelUrl: 'cash/cashIncome/importExcel',
+          checkIncome: 'cash/cashIncome/checkIncome'
+
         },
-        dictOptions:{},
-        superFieldList:[],
+        dictOptions: {},
+        superFieldList: []
       }
     },
     created() {
-    this.getSuperFieldList();
+      this.getSuperFieldList()
     },
     computed: {
-      importExcelUrl: function(){
-        return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
-      },
+      importExcelUrl: function() {
+        return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`
+      }
     },
     methods: {
-      initDictConfig(){
+      initDictConfig() {
       },
-      getSuperFieldList(){
-        let fieldList=[];
-        fieldList.push({type:'string',value:'customerName',text:'客户',dictCode:'per_customer,customer_name,id'})
-        fieldList.push({type:'BigDecimal',value:'incom',text:'来款金额',dictCode:''})
-        fieldList.push({type:'string',value:'bank',text:'来款银行',dictCode:'bank'})
-        fieldList.push({type:'string',value:'status',text:'审核状态',dictCode:''})
-        fieldList.push({type:'date',value:'incomeDate',text:'来款日期'})
-        fieldList.push({type:'string',value:'remark',text:'备注',dictCode:''})
+      getSuperFieldList() {
+        let fieldList = []
+        fieldList.push({ type: 'string', value: 'customerName', text: '客户', dictCode: 'per_customer,customer_name,id' })
+        fieldList.push({ type: 'BigDecimal', value: 'income', text: '来款金额', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'bank', text: '来款银行', dictCode: 'bank' })
+        fieldList.push({ type: 'string', value: 'status', text: '审核状态', dictCode: '' })
+        fieldList.push({ type: 'date', value: 'incomeDate', text: '来款日期' })
+        fieldList.push({ type: 'string', value: 'remark', text: '备注', dictCode: '' })
         this.superFieldList = fieldList
+      },
+      checkIncome(id) {
+
+        var that = this
+        let params = { id: id }
+        getAction(this.url.checkIncome, params).then((res) => {
+          if (res.success) {
+            that.$message.success(res.message)
+            that.$emit('ok')
+          } else {
+            that.$message.warning(res.message)
+          }
+        }).finally(() => {
+          that.confirmLoading = false
+          this.loadData()
+        })
       }
     }
   }
