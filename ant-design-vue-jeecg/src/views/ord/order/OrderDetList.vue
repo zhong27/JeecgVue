@@ -2,7 +2,7 @@
   <a-card :bordered="false" :class="'cust-erp-sub-tab'">
     <!-- 操作按钮区域 -->
     <div class="table-operator" v-if="mainId">
-      <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
+      <a-button @click="handleAdd" type="primary" icon="plus">新增明细</a-button>
       <a-button type="primary" icon="download" @click="handleExportXls('订单明细表')">导出</a-button>
       <a-upload
         name="file"
@@ -170,10 +170,15 @@
             align:"center",
             dataIndex: 'price'
           },
+          // {
+          //   title:'数量',
+          //   align:"center",
+          //   dataIndex: 'num'
+          // },
           {
-            title:'数量',
+            title:'重量',
             align:"center",
-            dataIndex: 'num'
+            dataIndex: 'weight'
           },
           {
             title:'总价',

@@ -99,7 +99,7 @@
 
         <span slot="action" slot-scope="text, record">
           <!--<a @click="handleEdit(record)">编辑</a>-->
-          <a @click="checkIncome(record.id)">审核</a>
+          <a  :disabled="record.status === 'finish' ? true : false" @click="checkIncome(record.id)">审核</a>
 
           <a-divider type="vertical"/>
           <a-dropdown>

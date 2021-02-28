@@ -208,6 +208,11 @@
             dataIndex: 'matWidth'
           },
           {
+            title:'材料号',
+            align:"center",
+            dataIndex: 'matNo'
+          },
+          {
             title:'单价',
             align:"center",
             dataIndex: 'price'
@@ -221,11 +226,6 @@
             title:'材料总数量',
             align:"center",
             dataIndex: 'matNumber'
-          },
-          {
-            title:'材料号',
-            align:"center",
-            dataIndex: 'matNo'
           },
           {
             title:'仓库',
