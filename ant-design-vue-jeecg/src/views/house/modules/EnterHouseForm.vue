@@ -8,8 +8,8 @@
               <j-popup
                 v-decorator="['productName', validatorRules.productName]"
                 :trigger-change="true"
-                org-fields="product_name,product_class,mat_len,mat_width,mat_thick,mat_no"
-                dest-fields="productName,productClass,matLen,matWidth,matThick,matNo"
+                org-fields="product_name,product_class,mat_len,mat_width,mat_thick,mat_no,price"
+                dest-fields="productName,productClass,matLen,matWidth,matThick,matNo,price"
                 code="sto_mater_info"
                 @callback="popupCallback"
               />
@@ -42,6 +42,11 @@
           <a-col :span="12">
             <a-form-item label="材料号" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input disabled v-decorator="['matNo', validatorRules.matNo]" placeholder="请输入材料号"></a-input>
+            </a-form-item>
+          </a-col>
+          <a-col :span="12">
+            <a-form-item label="单价" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input-number disabled v-decorator="['price', validatorRules.price]" placeholder="请输入单价" style="width: 100%"/>
             </a-form-item>
           </a-col>
           <a-col :span="12">
@@ -133,6 +138,11 @@
               { required: true, message: '请输入材料数量!' }
             ]
           },
+          price: {
+            rules: [
+              { required: true, message: '请输入单价!' }
+            ]
+          },
           warehouse: {
             rules: [
               { required: true, message: '请选择仓库!' }
@@ -203,7 +213,7 @@
         this.model = Object.assign({}, record)
         this.visible = true
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model, 'createTime', 'productClass', 'productName', 'matLen', 'matThick', 'matWidth', 'matWeight', 'matNumber', 'matNo', 'warehouse'))
+          this.form.setFieldsValue(pick(this.model, 'createTime', 'productClass', 'productName', 'matLen', 'matThick', 'matWidth', 'matWeight', 'matNumber', 'matNo', 'warehouse','price'))
         })
       },
       //渲染流程表单数据
@@ -249,7 +259,7 @@
         })
       },
       popupCallback(row) {
-        this.form.setFieldsValue(pick(row, 'createTime', 'productClass', 'productName', 'matLen', 'matThick', 'matWidth', 'matWeight', 'matNumber', 'matNo', 'warehouse'))
+        this.form.setFieldsValue(pick(row, 'createTime', 'productClass', 'productName', 'matLen', 'matThick', 'matWidth', 'matWeight', 'matNumber', 'matNo', 'warehouse','price'))
       }
     }
   }

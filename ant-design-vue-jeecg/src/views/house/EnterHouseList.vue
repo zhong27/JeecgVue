@@ -117,15 +117,18 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">编辑</a>
+          <!--<a @click="handleEdit(record)">编辑</a>-->
+          <a @click="handleDetail(record)">详情</a>
 
           <a-divider type="vertical" />
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
+<!--
               <a-menu-item>
                 <a @click="handleDetail(record)">详情</a>
               </a-menu-item>
+-->
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
                   <a>删除</a>
@@ -205,12 +208,17 @@
             dataIndex: 'matWidth'
           },
           {
-            title:'材料重量',
+            title:'单价',
+            align:"center",
+            dataIndex: 'price'
+          },
+          {
+            title:'材料总重量',
             align:"center",
             dataIndex: 'matWeight'
           },
           {
-            title:'材料数量',
+            title:'材料总数量',
             align:"center",
             dataIndex: 'matNumber'
           },
@@ -265,6 +273,7 @@
         fieldList.push({type:'BigDecimal',value:'matThick',text:'材料厚度',dictCode:''})
         fieldList.push({type:'BigDecimal',value:'matWidth',text:'材料宽度',dictCode:''})
         fieldList.push({type:'BigDecimal',value:'matWeight',text:'材料重量',dictCode:''})
+        fieldList.push({type:'BigDecimal',value:'price',text:'单价',dictCode:''})
         fieldList.push({type:'int',value:'matNumber',text:'材料数量',dictCode:''})
         fieldList.push({type:'string',value:'matNo',text:'材料号',dictCode:''})
         fieldList.push({type:'string',value:'warehouse',text:'仓库',dictCode:''})

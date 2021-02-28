@@ -15,22 +15,27 @@
           </a-col>
           <a-col :span="24">
             <a-form-item label="材料长度" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['matLen']" placeholder="请输入材料长度" style="width: 100%" />
+              <a-input-number v-decorator="['matLen', validatorRules.matLen]" placeholder="请输入材料长度" style="width: 100%" />
             </a-form-item>
           </a-col>
           <a-col :span="24">
             <a-form-item label="材料厚度" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['matThick']" placeholder="请输入材料厚度" style="width: 100%" />
+              <a-input-number v-decorator="['matThick', validatorRules.matThick]" placeholder="请输入材料厚度" style="width: 100%" />
             </a-form-item>
           </a-col>
           <a-col :span="24">
             <a-form-item label="材料宽度" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['matWidth']" placeholder="请输入材料宽度" style="width: 100%" />
+              <a-input-number v-decorator="['matWidth', validatorRules.matWidth]" placeholder="请输入材料宽度" style="width: 100%" />
+            </a-form-item>
+          </a-col>
+          <a-col :span="24">
+            <a-form-item label="单价" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input-number v-decorator="['price', validatorRules.price]" placeholder="请输入单价" style="width: 100%" />
             </a-form-item>
           </a-col>
           <a-col :span="24">
             <a-form-item label="材料号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['matNo']" placeholder="请输入材料号" style="width: 100%" />
+              <a-input v-decorator="['matNo', validatorRules.matNo]" placeholder="请输入材料号" style="width: 100%" />
             </a-form-item>
           </a-col>
           <a-col v-if="showFlowSubmitButton" :span="24" style="text-align: center">
@@ -100,6 +105,31 @@
               { required: true, message: '请输入材料名称!'},
             ]
           },
+          matLen: {
+            rules: [
+              { required: true, message: '请输入材料长度!'},
+            ]
+          },
+          matWidth: {
+            rules: [
+              { required: true, message: '请输入材料宽度!'},
+            ]
+          },
+          matThick: {
+            rules: [
+              { required: true, message: '请输入材料厚度!'},
+            ]
+          },
+          matNo: {
+            rules: [
+              { required: true, message: '请输入材料号!'},
+            ]
+          },
+          price: {
+            rules: [
+              { required: true, message: '请输入单价!'},
+            ]
+          },
         },
         url: {
           add: "/sto/materialInformation/add",
@@ -140,7 +170,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'createTime','productClass','productName','matLen','matThick','matWidth','matNo'))
+          this.form.setFieldsValue(pick(this.model,'createTime','productClass','productName','matLen','matThick','matWidth','matNo','price'))
         })
       },
       //渲染流程表单数据
@@ -186,7 +216,7 @@
         })
       },
       popupCallback(row){
-        this.form.setFieldsValue(pick(row,'createTime','productClass','productName','matLen','matThick','matWidth','matNo'))
+        this.form.setFieldsValue(pick(row,'createTime','productClass','productName','matLen','matThick','matWidth','matNo','price'))
       },
     }
   }
