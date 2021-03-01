@@ -3,56 +3,24 @@
     <j-form-container :disabled="formDisabled">
       <a-form :form="form" slot="detail">
         <a-row>
-          <a-col :span="12">
-            <a-form-item label="客户名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-dict-select-tag type="list" v-decorator="['customerId', validatorRules.customerId]" :trigger-change="true" dictCode="per_customer,customer_name,id" placeholder="请选择客户名称" />
+          <a-col :span="24">
+            <a-form-item label="姓名" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入姓名"  ></a-input>
             </a-form-item>
           </a-col>
-          <a-col :span="12">
-            <a-form-item label="提单编号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['billNo']" placeholder="请输入提单编号"  ></a-input>
+          <a-col :span="24">
+            <a-form-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <j-dict-select-tag type="list" v-decorator="['sex', validatorRules.sex]" :trigger-change="true" dictCode="sex" placeholder="请选择性别" />
             </a-form-item>
           </a-col>
-          <a-col :span="12">
-            <a-form-item label="订单编号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['orderNo']" placeholder="请输入订单编号"  ></a-input>
+          <a-col :span="24">
+            <a-form-item label="车牌号" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['carNo', validatorRules.carNo]" placeholder="请输入车牌号"  ></a-input>
             </a-form-item>
           </a-col>
-          <a-col :span="12">
-            <a-form-item label="产品名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['productName', validatorRules.productName]" placeholder="请输入产品名称"  ></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="产品大类" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-dict-select-tag type="list" v-decorator="['productClass', validatorRules.productClass]" :trigger-change="true" dictCode="product_class" placeholder="请选择产品大类" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="总价" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['total']" placeholder="请输入总价" style="width: 100%" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="业务员" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-dict-select-tag type="list" v-decorator="['business', validatorRules.business]" :trigger-change="true" dictCode="per_business,name,id" placeholder="请选择业务员" />
-            </a-form-item>
-          </a-col>
-<!--
-          <a-col :span="12">
-            <a-form-item label="收货人" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['consignee']" placeholder="请输入收货人"  ></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
-            <a-form-item label="收货地址" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['consigneeAddress']" placeholder="请输入收货地址"  ></a-input>
-            </a-form-item>
-          </a-col>
--->
-          <a-col :span="12">
-            <a-form-item label="总重量" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['totalWeight']" placeholder="请输入总重量" style="width: 100%" />
+          <a-col :span="24">
+            <a-form-item label="电话号码" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['phone']" placeholder="请输入电话号码"  ></a-input>
             </a-form-item>
           </a-col>
           <a-col v-if="showFlowSubmitButton" :span="24" style="text-align: center">
@@ -73,7 +41,7 @@
   import JDictSelectTag from "@/components/dict/JDictSelectTag"
 
   export default {
-    name: 'OrderBillForm',
+    name: 'DriverForm',
     components: {
       JFormContainer,
       JDictSelectTag,
@@ -112,26 +80,26 @@
         },
         confirmLoading: false,
         validatorRules: {
-          customerId: {
+          name: {
             rules: [
-              { required: true, message: '请输入客户名称!'},
+              { required: true, message: '请输入姓名!'},
             ]
           },
-          productName: {
+          sex: {
             rules: [
-              { required: true, message: '请输入产品名称!'},
+              { required: true, message: '请输入性别!'},
             ]
           },
-          productClass: {
+          carNo: {
             rules: [
-              { required: true, message: '请输入产品大类!'},
+              { required: true, message: '请输入车牌号!'},
             ]
           },
         },
         url: {
-          add: "/ord/orderBill/add",
-          edit: "/ord/orderBill/edit",
-          queryById: "/ord/orderBill/queryById"
+          add: "/per/driver/add",
+          edit: "/per/driver/edit",
+          queryById: "/per/driver/queryById"
         }
       }
     },
@@ -167,7 +135,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'createTime','customerId','billNo','orderNo','productName','productClass','total','orderId','consignee','consigneeAddress','totalWeight'))
+          this.form.setFieldsValue(pick(this.model,'name','sex','carNo','phone'))
         })
       },
       //渲染流程表单数据
@@ -213,7 +181,7 @@
         })
       },
       popupCallback(row){
-        this.form.setFieldsValue(pick(row,'createTime','customerId','billNo','orderNo','productName','productClass','total','orderId','consignee','consigneeAddress','totalWeight'))
+        this.form.setFieldsValue(pick(row,'name','sex','carNo','phone'))
       },
     }
   }

@@ -161,14 +161,9 @@
             dataIndex: 'customer_dictText'
           },
           {
-            title: '订单编号',
+            title: '业务员',
             align: 'center',
-            dataIndex: 'orderNo'
-          },
-          {
-            title: '订单总价',
-            align: 'center',
-            dataIndex: 'orderTotal'
+            dataIndex: 'business_dictText'
           },
           {
             title: '司机',
@@ -184,6 +179,16 @@
             title: '电话号码',
             align: 'center',
             dataIndex: 'phone'
+          },
+          {
+            title: '订单编号',
+            align: 'center',
+            dataIndex: 'orderNo'
+          },
+          {
+            title: '订单总价',
+            align: 'center',
+            dataIndex: 'orderTotal'
           },
           {
             title: '支付状态',

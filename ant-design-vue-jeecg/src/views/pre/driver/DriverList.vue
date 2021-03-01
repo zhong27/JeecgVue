@@ -5,13 +5,13 @@
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
-            <a-form-item label="客户名称">
-              <j-dict-select-tag placeholder="请选择客户名称" v-model="queryParam.customerId" dictCode="per_customer,customer_name,id"/>
+            <a-form-item label="姓名">
+              <a-input placeholder="请输入姓名" v-model="queryParam.name"></a-input>
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
-            <a-form-item label="产品大类">
-              <j-dict-select-tag placeholder="请选择产品大类" v-model="queryParam.productClass" dictCode="product_class"/>
+            <a-form-item label="性别">
+              <j-dict-select-tag placeholder="请选择性别" v-model="queryParam.sex" dictCode="sex"/>
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
@@ -31,13 +31,11 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <!--<a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>-->
-      <a-button type="primary" icon="download" @click="handleExportXls('提单管理')">导出</a-button>
-<!--
+      <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
+      <a-button type="primary" icon="download" @click="handleExportXls('司机')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
--->
       <!-- 高级查询区域 -->
       <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>
       <a-dropdown v-if="selectedRowKeys.length > 0">
@@ -111,7 +109,7 @@
       </a-table>
     </div>
 
-    <order-bill-modal ref="modalForm" @ok="modalFormOk"></order-bill-modal>
+    <driver-modal ref="modalForm" @ok="modalFormOk"></driver-modal>
   </a-card>
 </template>
 
@@ -120,22 +118,22 @@
   import '@/assets/less/TableExpand.less'
   import { mixinDevice } from '@/utils/mixin'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
-  import OrderBillModal from './modules/OrderBillModal'
+  import DriverModal from './modules/DriverModal'
   import JDictSelectTag from '@/components/dict/JDictSelectTag.vue'
   import {filterMultiDictText} from '@/components/dict/JDictSelectUtil'
   import JSuperQuery from '@/components/jeecg/JSuperQuery.vue'
 
   export default {
-    name: 'OrderBillList',
+    name: 'DriverList',
     mixins:[JeecgListMixin, mixinDevice],
     components: {
       JDictSelectTag,
-      OrderBillModal,
+      DriverModal,
       JSuperQuery,
     },
     data () {
       return {
-        description: '提单管理管理页面',
+        description: '司机管理页面',
         // 表头
         columns: [
           {
@@ -149,76 +147,24 @@
             }
           },
           {
-            title:'创建日期',
+            title:'姓名',
             align:"center",
-            dataIndex: 'createTime'
+            dataIndex: 'name'
           },
           {
-            title:'客户名称',
+            title:'性别',
             align:"center",
-            dataIndex: 'customerId_dictText'
+            dataIndex: 'sex_dictText'
           },
           {
-            title:'提单编号',
+            title:'车牌号',
             align:"center",
-            dataIndex: 'billNo'
-          },
-          {
-            title:'订单编号',
-            align:"center",
-            dataIndex: 'orderNo'
-          },
-          {
-            title:'材料名称',
-            align:"center",
-            dataIndex: 'productName'
-          },
-          {
-            title:'产品大类',
-            align:"center",
-            dataIndex: 'productClass_dictText'
-          },
-          {
-            title: '业务员',
-            align: 'center',
-            dataIndex: 'business_dictText'
-          },
-          {
-            title: '司机',
-            align: 'center',
-            dataIndex: 'driver'
-          },
-          {
-            title: '车牌号',
-            align: 'center',
             dataIndex: 'carNo'
           },
           {
-            title:'总价',
+            title:'电话号码',
             align:"center",
-            dataIndex: 'total'
-          },
-/*
-          {
-            title:'订单id',
-            align:"center",
-            dataIndex: 'orderId'
-          },
-          {
-            title:'收货人',
-            align:"center",
-            dataIndex: 'consignee'
-          },
-          {
-            title:'收货地址',
-            align:"center",
-            dataIndex: 'consigneeAddress'
-          },
- */
-          {
-            title:'总重量',
-            align:"center",
-            dataIndex: 'totalWeight'
+            dataIndex: 'phone'
           },
           {
             title: '操作',
@@ -230,12 +176,12 @@
           }
         ],
         url: {
-          list: "/ord/orderBill/list",
-          delete: "/ord/orderBill/delete",
-          deleteBatch: "/ord/orderBill/deleteBatch",
-          exportXlsUrl: "/ord/orderBill/exportXls",
-          importExcelUrl: "ord/orderBill/importExcel",
-
+          list: "/per/driver/list",
+          delete: "/per/driver/delete",
+          deleteBatch: "/per/driver/deleteBatch",
+          exportXlsUrl: "/per/driver/exportXls",
+          importExcelUrl: "per/driver/importExcel",
+          
         },
         dictOptions:{},
         superFieldList:[],
@@ -254,17 +200,10 @@
       },
       getSuperFieldList(){
         let fieldList=[];
-        fieldList.push({type:'datetime',value:'createTime',text:'创建日期'})
-        fieldList.push({type:'string',value:'customerId',text:'客户名称',dictCode:'per_customer,customer_name,id'})
-        fieldList.push({type:'string',value:'billNo',text:'提单编号',dictCode:''})
-        fieldList.push({type:'string',value:'orderNo',text:'订单编号',dictCode:''})
-        fieldList.push({type:'string',value:'productName',text:'材料名称',dictCode:''})
-        fieldList.push({type:'string',value:'productClass',text:'产品大类',dictCode:'product_class'})
-        fieldList.push({type:'BigDecimal',value:'total',text:'总价',dictCode:''})
-        fieldList.push({type:'string',value:'orderId',text:'订单id',dictCode:''})
-        fieldList.push({type:'string',value:'consignee',text:'收货人',dictCode:''})
-        fieldList.push({type:'string',value:'consigneeAddress',text:'收货地址',dictCode:''})
-        fieldList.push({type:'BigDecimal',value:'totalWeight',text:'总重量',dictCode:''})
+        fieldList.push({type:'string',value:'name',text:'姓名',dictCode:''})
+        fieldList.push({type:'string',value:'sex',text:'性别',dictCode:'sex'})
+        fieldList.push({type:'string',value:'carNo',text:'车牌号',dictCode:''})
+        fieldList.push({type:'string',value:'phone',text:'电话号码',dictCode:''})
         this.superFieldList = fieldList
       }
     }
