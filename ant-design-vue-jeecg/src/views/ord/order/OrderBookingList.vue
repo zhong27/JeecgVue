@@ -6,7 +6,8 @@
         <a-row :gutter="24">
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="客户名称">
-              <j-dict-select-tag placeholder="请选择客户名称" v-model="queryParam.customer" dictCode="per_customer,customer_name,id"/>
+              <j-dict-select-tag placeholder="请选择客户名称" v-model="queryParam.customer"
+                                 dictCode="per_customer,customer_name,id"/>
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
@@ -28,22 +29,28 @@
       </a-form>
     </div>
     <!-- 查询区域-END -->
-    
+
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
+      <a-button @click="changePayStatus" type="primary" icon="check">支付订单</a-button>
       <a-button type="primary" icon="download" @click="handleExportXls('订单预定')">导出</a-button>
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+<!--
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
+                @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
+-->
       <!-- 高级查询区域 -->
-      <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>
+      <j-super-query :fieldList="superFieldList" ref="superQueryModal"
+                     @handleSuperQuery="handleSuperQuery"></j-super-query>
     </div>
 
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{
+        selectedRowKeys.length }}</a>项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -67,7 +74,8 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px;font-style: italic;">无图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="" style="max-width:80px;font-size: 12px;font-style: italic;"/>
+          <img v-else :src="getImgView(text)" height="25px" alt=""
+               style="max-width:80px;font-size: 12px;font-style: italic;"/>
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px;font-style: italic;">无文件</span>
@@ -85,9 +93,9 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
 
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -102,8 +110,8 @@
     </div>
 
     <a-tabs defaultActiveKey="1">
-      <a-tab-pane tab="订单明细表" key="1" >
-        <OrderDetList :mainId="selectedMainId" />
+      <a-tab-pane tab="订单明细表" key="1">
+        <OrderDetList :mainId="selectedMainId"/>
       </a-tab-pane>
     </a-tabs>
 
@@ -118,110 +126,111 @@
   import { getAction } from '@/api/manage'
   import OrderDetList from './OrderDetList'
   import JDictSelectTag from '@/components/dict/JDictSelectTag.vue'
-  import {initDictOptions,filterMultiDictText} from '@/components/dict/JDictSelectUtil'
+  import { initDictOptions, filterMultiDictText } from '@/components/dict/JDictSelectUtil'
   import '@/assets/less/TableExpand.less'
   import JSuperQuery from '@/components/jeecg/JSuperQuery.vue'
 
   export default {
-    name: "OrderBookingList",
-    mixins:[JeecgListMixin],
+    name: 'OrderBookingList',
+    mixins: [JeecgListMixin],
     components: {
       JDictSelectTag,
       OrderDetList,
       OrderBookingModal,
       JSuperQuery
     },
-    data () {
+    data() {
       return {
         description: '订单预定管理页面',
         // 表头
         columns: [
           {
-            title:'创建日期',
-            align:"center",
+            title: '创建日期',
+            align: 'center',
             dataIndex: 'createTime'
           },
           {
-            title:'客户名称',
-            align:"center",
-            dataIndex: 'customer_dictText',
+            title: '客户名称',
+            align: 'center',
+            dataIndex: 'customer_dictText'
           },
           {
-            title:'订单编号',
-            align:"center",
+            title: '订单编号',
+            align: 'center',
             dataIndex: 'orderNo'
           },
           {
-            title:'订单总价',
-            align:"center",
+            title: '订单总价',
+            align: 'center',
             dataIndex: 'orderTotal'
           },
           {
-            title:'司机',
-            align:"center",
+            title: '司机',
+            align: 'center',
             dataIndex: 'driver'
           },
           {
-            title:'车牌号',
-            align:"center",
+            title: '车牌号',
+            align: 'center',
             dataIndex: 'carNo'
           },
           {
-            title:'电话号码',
-            align:"center",
+            title: '电话号码',
+            align: 'center',
             dataIndex: 'phone'
           },
           {
-            title:'支付状态',
-            align:"center",
-            dataIndex: 'payStatus_dictText',
+            title: '支付状态',
+            align: 'center',
+            dataIndex: 'payStatus_dictText'
           },
           {
             title: '操作',
             dataIndex: 'action',
-            align:"center",
-            fixed:"right",
-            width:147,
-            scopedSlots: { customRender: 'action' },
+            align: 'center',
+            fixed: 'right',
+            width: 147,
+            scopedSlots: { customRender: 'action' }
           }
         ],
         url: {
-          list: "/ord/orderBooking/list",
-          delete: "/ord/orderBooking/delete",
-          deleteBatch: "/ord/orderBooking/deleteBatch",
-          exportXlsUrl: "/ord/orderBooking/exportXls",
-          importExcelUrl: "ord/orderBooking/importExcel",
+          list: '/ord/orderBooking/list',
+          delete: '/ord/orderBooking/delete',
+          deleteBatch: '/ord/orderBooking/deleteBatch',
+          exportXlsUrl: '/ord/orderBooking/exportXls',
+          importExcelUrl: 'ord/orderBooking/importExcel',
+          changePayStatus: 'ord/orderBooking/changePayStatus',
         },
-        dictOptions:{
-         customer:[],
-         payStatus:[],
+        dictOptions: {
+          customer: [],
+          payStatus: []
         },
         /* 分页参数 */
-        ipagination:{
+        ipagination: {
           current: 1,
           pageSize: 5,
           pageSizeOptions: ['5', '10', '50'],
           showTotal: (total, range) => {
-            return range[0] + "-" + range[1] + " 共" + total + "条"
+            return range[0] + '-' + range[1] + ' 共' + total + '条'
           },
           showQuickJumper: true,
           showSizeChanger: true,
           total: 0
         },
-        selectedMainId:'',
-        superFieldList:[],
+        selectedMainId: '',
+        superFieldList: []
       }
     },
     created() {
-      this.getSuperFieldList();
+      this.getSuperFieldList()
     },
     computed: {
-      importExcelUrl: function(){
-        return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
+      importExcelUrl: function() {
+        return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`
       }
     },
     methods: {
-      initDictConfig(){
+      initDictConfig() {
         initDictOptions('per_customer,customer_name,id').then((res) => {
           if (res.success) {
             this.$set(this.dictOptions, 'customer', res.result)
@@ -233,58 +242,79 @@
           }
         })
       },
+      changePayStatus() {
+        if (this.selectedRowKeys.length === 0) {
+          return this.$message.warning('请选择订单！')
+        }
+
+        var that = this
+        var id = this.selectedRowKeys[0]
+        let params = { orderId: id }
+        console.log('-----params', params)
+        getAction(this.url.changePayStatus, params).then((res) => {
+          if (res.success) {
+            that.$message.success(res.message)
+            // that.$emit('ok')
+          } else {
+            that.$message.warning(res.message)
+          }
+        }).finally(() => {
+          that.confirmLoading = false
+          this.loadData()
+        })
+      },
       clickThenSelect(record) {
         return {
           on: {
             click: () => {
-              this.onSelectChange(record.id.split(","), [record]);
+              this.onSelectChange(record.id.split(','), [record])
             }
           }
         }
       },
       onClearSelected() {
-        this.selectedRowKeys = [];
-        this.selectionRows = [];
-        this.selectedMainId=''
+        this.selectedRowKeys = []
+        this.selectionRows = []
+        this.selectedMainId = ''
       },
       onSelectChange(selectedRowKeys, selectionRows) {
-        this.selectedMainId=selectedRowKeys[0]
-        this.selectedRowKeys = selectedRowKeys;
-        this.selectionRows = selectionRows;
+        this.selectedMainId = selectedRowKeys[0]
+        this.selectedRowKeys = selectedRowKeys
+        this.selectionRows = selectionRows
       },
       loadData(arg) {
-        if(!this.url.list){
-          this.$message.error("请设置url.list属性!")
+        if (!this.url.list) {
+          this.$message.error('请设置url.list属性!')
           return
         }
         //加载数据 若传入参数1则加载第一页的内容
         if (arg === 1) {
-          this.ipagination.current = 1;
+          this.ipagination.current = 1
         }
         this.onClearSelected()
-        var params = this.getQueryParams();//查询条件
-        this.loading = true;
+        var params = this.getQueryParams()//查询条件
+        this.loading = true
         getAction(this.url.list, params).then((res) => {
           if (res.success) {
-            this.dataSource = res.result.records;
-            this.ipagination.total = res.result.total;
+            this.dataSource = res.result.records
+            this.ipagination.total = res.result.total
           }
-          if(res.code===510){
+          if (res.code === 510) {
             this.$message.warning(res.message)
           }
-          this.loading = false;
+          this.loading = false
         })
       },
-      getSuperFieldList(){
-        let fieldList=[];
-        fieldList.push({type:'datetime',value:'createTime',text:'创建日期'})
-        fieldList.push({type:'string',value:'customer',text:'客户名称',dictCode:'per_customer,customer_name,id'})
-        fieldList.push({type:'string',value:'orderNo',text:'订单编号',dictCode:''})
-        fieldList.push({type:'BigDecimal',value:'orderTotal',text:'订单总价',dictCode:''})
-        fieldList.push({type:'string',value:'driver',text:'司机',dictCode:''})
-        fieldList.push({type:'string',value:'carNo',text:'车牌号',dictCode:''})
-        fieldList.push({type:'string',value:'phone',text:'电话号码',dictCode:''})
-        fieldList.push({type:'string',value:'payStatus',text:'支付状态',dictCode:'pay_status'})
+      getSuperFieldList() {
+        let fieldList = []
+        fieldList.push({ type: 'datetime', value: 'createTime', text: '创建日期' })
+        fieldList.push({ type: 'string', value: 'customer', text: '客户名称', dictCode: 'per_customer,customer_name,id' })
+        fieldList.push({ type: 'string', value: 'orderNo', text: '订单编号', dictCode: '' })
+        fieldList.push({ type: 'BigDecimal', value: 'orderTotal', text: '订单总价', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'driver', text: '司机', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'carNo', text: '车牌号', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'phone', text: '电话号码', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'payStatus', text: '支付状态', dictCode: 'pay_status' })
         this.superFieldList = fieldList
       }
     }
