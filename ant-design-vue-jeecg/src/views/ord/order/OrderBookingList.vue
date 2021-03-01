@@ -4,18 +4,18 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-          <a-col :xl="6" :lg="7" :md="8" :sm="24">
+          <a-col :xl="6" :lg="7" :md="8" :sm="12">
             <a-form-item label="客户名称">
               <j-dict-select-tag placeholder="请选择客户名称" v-model="queryParam.customer"
                                  dictCode="per_customer,customer_name,id"/>
             </a-form-item>
           </a-col>
-          <a-col :xl="6" :lg="7" :md="8" :sm="24">
+          <a-col :xl="6" :lg="7" :md="8" :sm="12">
             <a-form-item label="司机">
               <a-input placeholder="请输入司机" v-model="queryParam.driver"></a-input>
             </a-form-item>
           </a-col>
-          <a-col :xl="6" :lg="7" :md="8" :sm="24">
+          <a-col :xl="6" :lg="7" :md="8" :sm="12">
             <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
               <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
@@ -35,12 +35,12 @@
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
       <a-button @click="changePayStatus" type="primary" icon="check">支付订单</a-button>
       <a-button type="primary" icon="download" @click="handleExportXls('订单预定')">导出</a-button>
-<!--
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
-                @change="handleImportExcel">
-        <a-button type="primary" icon="import">导入</a-button>
-      </a-upload>
--->
+      <!--
+            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
+                      @change="handleImportExcel">
+              <a-button type="primary" icon="import">导入</a-button>
+            </a-upload>
+      -->
       <!-- 高级查询区域 -->
       <j-super-query :fieldList="superFieldList" ref="superQueryModal"
                      @handleSuperQuery="handleSuperQuery"></j-super-query>
@@ -91,19 +91,25 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">编辑</a>
+          <a :disabled="record.payStatus === 'pay'?true:false " @click="handleEdit(record)">编辑</a>
 
           <a-divider type="vertical"/>
-          <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
-            <a-menu slot="overlay">
-              <a-menu-item>
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
+          <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
                   <a>删除</a>
-                </a-popconfirm>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
+          </a-popconfirm>
+
+          <!--
+                    <a-dropdown>
+                      <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+                      <a-menu slot="overlay">
+                        <a-menu-item>
+                          <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
+                            <a>删除</a>
+                          </a-popconfirm>
+                        </a-menu-item>
+                      </a-menu>
+                    </a-dropdown>
+          -->
         </span>
 
       </a-table>
@@ -199,7 +205,7 @@
           deleteBatch: '/ord/orderBooking/deleteBatch',
           exportXlsUrl: '/ord/orderBooking/exportXls',
           importExcelUrl: 'ord/orderBooking/importExcel',
-          changePayStatus: 'ord/orderBooking/changePayStatus',
+          changePayStatus: 'ord/orderBooking/changePayStatus'
         },
         dictOptions: {
           customer: [],

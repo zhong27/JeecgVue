@@ -168,6 +168,11 @@
             dataIndex: 'remainMoney'
           },
           {
+            title:'已用金额',
+            align:"center",
+            dataIndex: 'amountUsed'
+          },
+          {
             title: '操作',
             dataIndex: 'action',
             align:"center",
