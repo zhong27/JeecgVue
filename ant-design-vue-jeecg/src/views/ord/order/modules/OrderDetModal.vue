@@ -11,7 +11,7 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-row>
-          <a-col :span="24">
+          <a-col :span="12">
             <a-form-item label="材料名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <j-popup
                 v-decorator="['productName', validatorRules.productName]"
@@ -23,37 +23,37 @@
                 />
             </a-form-item>
           </a-col>
-          <a-col :span="24">
+          <a-col :span="12">
             <a-form-item label="产品大类" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <j-dict-select-tag disabled type="list" v-decorator="['productClass', validatorRules.productClass]" :trigger-change="true" dictCode="product_class" placeholder="请选择产品大类" />
             </a-form-item>
           </a-col>
-          <a-col :span="24">
+          <a-col :span="12">
             <a-form-item label="材料长度" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input-number disabled v-decorator="['matLen']" placeholder="请输入材料长度" style="width: 100%" />
             </a-form-item>
           </a-col>
-          <a-col :span="24">
+          <a-col :span="12">
             <a-form-item label="材料宽度" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input-number disabled v-decorator="['matWidth']" placeholder="请输入材料宽度" style="width: 100%" />
             </a-form-item>
           </a-col>
-          <a-col :span="24">
+          <a-col :span="12">
             <a-form-item label="材料厚度" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input-number disabled v-decorator="['matThick']" placeholder="请输入材料厚度" style="width: 100%" />
             </a-form-item>
           </a-col>
-          <a-col :span="24">
+          <a-col :span="12">
             <a-form-item label="材料号" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input disabled v-decorator="['matNo']" placeholder="请输入材料号" ></a-input>
             </a-form-item>
           </a-col>
-          <a-col :span="24">
+          <a-col :span="12">
             <a-form-item label="仓库" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <j-dict-select-tag disabled type="list" v-decorator="['warehouse']" :trigger-change="true" dictCode="sto_warehouse,house_name,id" placeholder="请选择仓库" />
             </a-form-item>
           </a-col>
-          <a-col :span="24">
+          <a-col :span="12">
             <a-form-item label="单价" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input-number disabled v-decorator="['price']" placeholder="请输入单价" style="width: 100%" />
             </a-form-item>
@@ -63,7 +63,7 @@
               <!--<a-input-number v-decorator="['num']" placeholder="请输入数量" style="width: 100%" />-->
             <!--</a-form-item>-->
           <!--</a-col>-->
-          <a-col :span="24">
+          <a-col :span="12">
             <a-form-item label="重量" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input-number v-decorator="['weight',validatorRules.weight]" placeholder="请输入重量" style="width: 100%" />
             </a-form-item>
