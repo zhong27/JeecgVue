@@ -170,16 +170,18 @@
             align: 'center',
             dataIndex: 'driver'
           },
+/*
           {
             title: '车牌号',
             align: 'center',
             dataIndex: 'carNo'
           },
           {
-            title: '电话号码',
+            title: '司机号码',
             align: 'center',
             dataIndex: 'phone'
           },
+*/
           {
             title: '订单编号',
             align: 'center',

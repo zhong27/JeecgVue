@@ -38,6 +38,11 @@
               <j-dict-select-tag type="list" v-decorator="['business', validatorRules.business]" :trigger-change="true" dictCode="per_business,name,id" placeholder="请选择业务员" />
             </a-form-item>
           </a-col>
+          <a-col :span="12">
+            <a-form-item label="银行" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <j-dict-select-tag type="list" v-decorator="['bank', validatorRules.bank]" :trigger-change="true" dictCode="bank" placeholder="请选择银行" />
+            </a-form-item>
+          </a-col>
 <!--
           <a-col :span="12">
             <a-form-item label="收货人" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -115,6 +120,11 @@
           customerId: {
             rules: [
               { required: true, message: '请输入客户名称!'},
+            ]
+          },
+          bank: {
+            rules: [
+              { required: true, message: '请选择银行!'},
             ]
           },
           productName: {

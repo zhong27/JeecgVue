@@ -6,7 +6,8 @@
         <a-row :gutter="24">
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="客户名称">
-              <j-dict-select-tag placeholder="请选择客户名称" v-model="queryParam.customerId" dictCode="per_customer,customer_name,id"/>
+              <j-dict-select-tag placeholder="请选择客户名称" v-model="queryParam.customerId"
+                                 dictCode="per_customer,customer_name,id"/>
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
@@ -33,25 +34,32 @@
     <div class="table-operator">
       <!--<a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>-->
       <a-button type="primary" icon="download" @click="handleExportXls('提单管理')">导出</a-button>
-<!--
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-        <a-button type="primary" icon="import">导入</a-button>
-      </a-upload>
--->
+      <!--
+            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+              <a-button type="primary" icon="import">导入</a-button>
+            </a-upload>
+      -->
       <!-- 高级查询区域 -->
-      <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>
+      <j-super-query :fieldList="superFieldList" ref="superQueryModal"
+                     @handleSuperQuery="handleSuperQuery"></j-super-query>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
-          <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
+          <a-menu-item key="1" @click="batchDel">
+            <a-icon type="delete"/>
+            删除
+          </a-menu-item>
         </a-menu>
-        <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /></a-button>
+        <a-button style="margin-left: 8px"> 批量操作
+          <a-icon type="down"/>
+        </a-button>
       </a-dropdown>
     </div>
 
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{
+        selectedRowKeys.length }}</a>项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -74,7 +82,8 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px;font-style: italic;">无图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="" style="max-width:80px;font-size: 12px;font-style: italic;"/>
+          <img v-else :src="getImgView(text)" height="25px" alt=""
+               style="max-width:80px;font-size: 12px;font-style: italic;"/>
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px;font-style: italic;">无文件</span>
@@ -92,9 +101,9 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
 
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a @click="handleDetail(record)">详情</a>
@@ -122,18 +131,18 @@
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
   import OrderBillModal from './modules/OrderBillModal'
   import JDictSelectTag from '@/components/dict/JDictSelectTag.vue'
-  import {filterMultiDictText} from '@/components/dict/JDictSelectUtil'
+  import { filterMultiDictText } from '@/components/dict/JDictSelectUtil'
   import JSuperQuery from '@/components/jeecg/JSuperQuery.vue'
 
   export default {
     name: 'OrderBillList',
-    mixins:[JeecgListMixin, mixinDevice],
+    mixins: [JeecgListMixin, mixinDevice],
     components: {
       JDictSelectTag,
       OrderBillModal,
-      JSuperQuery,
+      JSuperQuery
     },
-    data () {
+    data() {
       return {
         description: '提单管理管理页面',
         // 表头
@@ -141,43 +150,45 @@
           {
             title: '#',
             dataIndex: '',
-            key:'rowIndex',
-            width:60,
-            align:"center",
-            customRender:function (t,r,index) {
-              return parseInt(index)+1;
+            key: 'rowIndex',
+            width: 60,
+            align: 'center',
+            customRender: function(t, r, index) {
+              return parseInt(index) + 1
             }
           },
           {
-            title:'创建日期',
-            align:"center",
+            title: '创建日期',
+            align: 'center',
             dataIndex: 'createTime'
           },
           {
-            title:'客户名称',
-            align:"center",
+            title: '客户名称',
+            align: 'center',
             dataIndex: 'customerId_dictText'
           },
           {
-            title:'提单编号',
-            align:"center",
+            title: '提单编号',
+            align: 'center',
             dataIndex: 'billNo'
           },
           {
-            title:'订单编号',
-            align:"center",
+            title: '订单编号',
+            align: 'center',
             dataIndex: 'orderNo'
           },
-          {
-            title:'材料名称',
-            align:"center",
-            dataIndex: 'productName'
-          },
-          {
-            title:'产品大类',
-            align:"center",
-            dataIndex: 'productClass_dictText'
-          },
+          /*
+                    {
+                      title:'材料名称',
+                      align:"center",
+                      dataIndex: 'productName'
+                    },
+                    {
+                      title:'产品大类',
+                      align:"center",
+                      dataIndex: 'productClass_dictText'
+                    },
+          */
           {
             title: '业务员',
             align: 'center',
@@ -193,78 +204,90 @@
             align: 'center',
             dataIndex: 'carNo'
           },
+          /*
+                    {
+                      title:'订单id',
+                      align:"center",
+                      dataIndex: 'orderId'
+                    },
+          */
+          /*
+                    {
+                      title:'收货人',
+                      align:"center",
+                       dataIndex: 'consignee'
+                    },
+                    {
+                      title:'收货地址',
+                      align:"center",
+                      dataIndex: 'consigneeAddress'
+                    },
+          */
           {
-            title:'总价',
-            align:"center",
+            title: '银行',
+            align: 'center',
+            dataIndex: 'bank_dictText'
+          },
+          {
+            title: '银行账户',
+            align: 'center',
+            dataIndex: 'bankAccount'
+          },
+          {
+            title: '总价',
+            align: 'center',
             dataIndex: 'total'
           },
-/*
           {
-            title:'订单id',
-            align:"center",
-            dataIndex: 'orderId'
-          },
-          {
-            title:'收货人',
-            align:"center",
-            dataIndex: 'consignee'
-          },
-          {
-            title:'收货地址',
-            align:"center",
-            dataIndex: 'consigneeAddress'
-          },
- */
-          {
-            title:'总重量',
-            align:"center",
+            title: '总重量',
+            align: 'center',
             dataIndex: 'totalWeight'
           },
           {
             title: '操作',
             dataIndex: 'action',
-            align:"center",
-            fixed:"right",
-            width:147,
+            align: 'center',
+            fixed: 'right',
+            width: 147,
             scopedSlots: { customRender: 'action' }
           }
         ],
         url: {
-          list: "/ord/orderBill/list",
-          delete: "/ord/orderBill/delete",
-          deleteBatch: "/ord/orderBill/deleteBatch",
-          exportXlsUrl: "/ord/orderBill/exportXls",
-          importExcelUrl: "ord/orderBill/importExcel",
+          list: '/ord/orderBill/list',
+          delete: '/ord/orderBill/delete',
+          deleteBatch: '/ord/orderBill/deleteBatch',
+          exportXlsUrl: '/ord/orderBill/exportXls',
+          importExcelUrl: 'ord/orderBill/importExcel'
 
         },
-        dictOptions:{},
-        superFieldList:[],
+        dictOptions: {},
+        superFieldList: []
       }
     },
     created() {
-    this.getSuperFieldList();
+      this.getSuperFieldList()
     },
     computed: {
-      importExcelUrl: function(){
-        return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
-      },
+      importExcelUrl: function() {
+        return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`
+      }
     },
     methods: {
-      initDictConfig(){
+      initDictConfig() {
       },
-      getSuperFieldList(){
-        let fieldList=[];
-        fieldList.push({type:'datetime',value:'createTime',text:'创建日期'})
-        fieldList.push({type:'string',value:'customerId',text:'客户名称',dictCode:'per_customer,customer_name,id'})
-        fieldList.push({type:'string',value:'billNo',text:'提单编号',dictCode:''})
-        fieldList.push({type:'string',value:'orderNo',text:'订单编号',dictCode:''})
-        fieldList.push({type:'string',value:'productName',text:'材料名称',dictCode:''})
-        fieldList.push({type:'string',value:'productClass',text:'产品大类',dictCode:'product_class'})
-        fieldList.push({type:'BigDecimal',value:'total',text:'总价',dictCode:''})
-        fieldList.push({type:'string',value:'orderId',text:'订单id',dictCode:''})
-        fieldList.push({type:'string',value:'consignee',text:'收货人',dictCode:''})
-        fieldList.push({type:'string',value:'consigneeAddress',text:'收货地址',dictCode:''})
-        fieldList.push({type:'BigDecimal',value:'totalWeight',text:'总重量',dictCode:''})
+      getSuperFieldList() {
+        let fieldList = []
+        fieldList.push({ type: 'datetime', value: 'createTime', text: '创建日期' })
+        fieldList.push({ type: 'string', value: 'customerId', text: '客户名称', dictCode: 'per_customer,customer_name,id' })
+        fieldList.push({ type: 'string', value: 'billNo', text: '提单编号', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'orderNo', text: '订单编号', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'productName', text: '材料名称', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'productClass', text: '产品大类', dictCode: 'product_class' })
+        fieldList.push({ type: 'BigDecimal', value: 'total', text: '总价', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'orderId', text: '订单id', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'consignee', text: '收货人', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'consigneeAddress', text: '收货地址', dictCode: '' })
+        fieldList.push({ type: 'BigDecimal', value: 'totalWeight', text: '总重量', dictCode: '' })
         this.superFieldList = fieldList
       }
     }
