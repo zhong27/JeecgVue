@@ -63,6 +63,7 @@
       </a-col>
     </a-row>
 
+<!--
     <a-card :loading="loading" :bordered="false" :body-style="{padding: '0'}">
       <div class="salesCard">
         <a-tabs default-active-key="1" size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}">
@@ -98,6 +99,7 @@
         </a-tabs>
       </div>
     </a-card>
+-->
 
     <a-row>
       <a-col :span="24">
