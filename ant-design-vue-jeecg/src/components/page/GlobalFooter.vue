@@ -9,9 +9,9 @@
       <a href="https://vuecomponent.github.io/ant-design-vue/docs/vue/introduce-cn/">Vue Antd</a>
     </div>
     <div class="copyright">
-      Copyright
+        ZXYPT
       <a-icon type="copyright"/>
-      2019 <span>JEECG开源社区 出品</span>
+      2021 <span>直销云平台 出品</span>
     </div>
   </div>
 </template>

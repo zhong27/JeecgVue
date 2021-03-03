@@ -164,6 +164,11 @@
             dataIndex: 'customerName_dictText'
           },
           {
+            title: '来款编号',
+            align: 'center',
+            dataIndex: 'incomeNo'
+          },
+          {
             title: '来款金额',
             align: 'center',
             dataIndex: 'income'
@@ -177,6 +182,11 @@
             title: '审核状态',
             align: 'center',
             dataIndex: 'status_dictText'
+          },
+          {
+            title: '审核人',
+            align: 'center',
+            dataIndex: 'checker_dictText'
           },
           {
             title: '来款日期',
