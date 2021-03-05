@@ -32,9 +32,9 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button @click="changePayStatus" type="primary" icon="check">支付订单</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('订单预定')">导出</a-button>
+      <a-button v-has="'people:button'" @click="handleAdd" type="primary" icon="plus">新增</a-button>
+      <a-button v-has="'people:button'" @click="changePayStatus" type="primary" icon="check">支付订单</a-button>
+      <a-button v-has="'people:button'" type="primary" icon="download" @click="handleExportXls('订单预定')">导出</a-button>
       <!--
             <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
                       @change="handleImportExcel">
@@ -51,7 +51,8 @@
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
         <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{
         selectedRowKeys.length }}</a>项
-        <a style="margin-left: 24px" @click="onClearSelected">清空</a>
+        <span style="margin-left: 24px">可用余额：</span><a>{{remainMoney}}</a> 元
+        <a style="margin-left: 24px" @click="onClearSelected">清空 </a>
       </div>
 
       <a-table
@@ -91,11 +92,11 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
-          <a :disabled="record.payStatus === 'pay'?true:false " @click="handleEdit(record)">编辑</a>
+          <a v-has="'people:button'" :disabled="record.payStatus === 'pay'?true:false " @click="handleEdit(record)">编辑</a>
 
           <a-divider type="vertical"/>
           <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                  <a>删除</a>
+                  <a :disabled="record.payStatus === 'pay'?true:false " v-has="'people:button'">删除</a>
           </a-popconfirm>
 
           <!--
@@ -170,18 +171,18 @@
             align: 'center',
             dataIndex: 'driver'
           },
-/*
-          {
-            title: '车牌号',
-            align: 'center',
-            dataIndex: 'carNo'
-          },
-          {
-            title: '司机号码',
-            align: 'center',
-            dataIndex: 'phone'
-          },
-*/
+          /*
+                    {
+                      title: '车牌号',
+                      align: 'center',
+                      dataIndex: 'carNo'
+                    },
+                    {
+                      title: '司机号码',
+                      align: 'center',
+                      dataIndex: 'phone'
+                    },
+          */
           {
             title: '订单编号',
             align: 'center',
@@ -212,7 +213,8 @@
           deleteBatch: '/ord/orderBooking/deleteBatch',
           exportXlsUrl: '/ord/orderBooking/exportXls',
           importExcelUrl: 'ord/orderBooking/importExcel',
-          changePayStatus: 'ord/orderBooking/changePayStatus'
+          changePayStatus: 'ord/orderBooking/changePayStatus',
+          queryRemainMoney: 'cash/cashBalance/queryRemainMoney'
         },
         dictOptions: {
           customer: [],
@@ -231,7 +233,8 @@
           total: 0
         },
         selectedMainId: '',
-        superFieldList: []
+        superFieldList: [],
+        remainMoney: 0,
       }
     },
     created() {
@@ -294,6 +297,25 @@
         this.selectedMainId = selectedRowKeys[0]
         this.selectedRowKeys = selectedRowKeys
         this.selectionRows = selectionRows
+        var customerId = { id: selectionRows[0].customer }
+        console.log('custoemrId', customerId)
+        getAction(this.url.queryRemainMoney, customerId).then((res) => {
+          console.log("返回值",res)
+          if (res.success) {
+            if (res.result === null){
+              this.remainMoney = 0
+            } else{
+              this.remainMoney = res.result.remainMoney
+            }
+
+          }
+          if (res.code === 510) {
+            this.$message.warning(res.message)
+          }
+
+          this.loading = false
+        })
+
       },
       loadData(arg) {
         if (!this.url.list) {
@@ -317,6 +339,7 @@
           }
           this.loading = false
         })
+
       },
       getSuperFieldList() {
         let fieldList = []

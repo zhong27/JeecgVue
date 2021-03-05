@@ -27,11 +27,11 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('客户信息')">导出</a-button>
+      <a-button @click="handleAdd" v-has="'people:button'" type="primary" icon="plus">新增</a-button>
+      <a-button type="primary" v-has="'people:button'"  icon="download" @click="handleExportXls('客户信息')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
                 @change="handleImportExcel">
-        <a-button type="primary" icon="import">导入</a-button>
+        <a-button v-has="'people:button'" type="primary" icon="import">导入</a-button>
       </a-upload>
       <!-- 高级查询区域 -->
       <j-super-query :fieldList="superFieldList" ref="superQueryModal"
@@ -86,14 +86,14 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">编辑</a>
+          <a v-has="'people:button'" @click="handleEdit(record)">编辑</a>
 
           <a-divider type="vertical"/>
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a v-has="'people:button'" class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
               <a-menu-item>
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
+                <a-popconfirm  title="确定删除吗?" @confirm="() => handleDelete(record.id)">
                   <a>删除</a>
                 </a-popconfirm>
               </a-menu-item>
@@ -141,6 +141,14 @@
         // 表头
         columns: [
           {
+            title: '创建日期',
+            align: "center",
+            dataIndex: 'createTime',
+            customRender: function(text) {
+              return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text)
+            }
+          },
+          {
             title: '客户名称',
             align: 'center',
             dataIndex: 'customerName'
@@ -166,12 +174,14 @@
             align: 'center',
             dataIndex: 'accountStatus_dictText'
           },
+/*
           {
             title: '营业执照',
             align: 'center',
             dataIndex: 'price',
             scopedSlots: { customRender: 'imgSlot' }
           },
+*/
           {
             title: '操作',
             dataIndex: 'action',

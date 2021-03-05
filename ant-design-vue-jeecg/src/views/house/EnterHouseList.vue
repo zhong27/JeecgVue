@@ -13,7 +13,7 @@
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="产品大类">
-              <j-popup placeholder="请选择产品大类" v-model="queryParam.productClass" code="sto_mater_info" org-fields="product_name,product_class,mat_len,mat_width,mat_thick" dest-fields="product_name,product_class,mat_len,mat_width,mat_thick" :field="getPopupField('product_name,product_class,mat_len,mat_width,mat_thick')"/>
+              <j-dict-select-tag placeholder="请选择产品大类"  dictCode="product_class" v-model="queryParam.productClass" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
@@ -60,9 +60,9 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('材料入库')">导出</a-button>
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+      <a-button v-has="'people:button'" @click="handleAdd" type="primary" icon="plus">新增</a-button>
+      <a-button v-has="'people:button'" type="primary" icon="download" @click="handleExportXls('材料入库')">导出</a-button>
+      <a-upload v-has="'people:button'" name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
       <!-- 高级查询区域 -->
@@ -71,7 +71,7 @@
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
         </a-menu>
-        <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /></a-button>
+        <a-button v-has="'people:button'" style="margin-left: 8px"> 批量操作 <a-icon type="down" /></a-button>
       </a-dropdown>
     </div>
 
@@ -121,7 +121,7 @@
           <a @click="handleDetail(record)">详情</a>
 
           <a-divider type="vertical" />
-          <a @click="handleEdit(record)">编辑</a>
+          <a v-has="'people:button'" @click="handleEdit(record)">编辑</a>
 <!--
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
@@ -156,6 +156,7 @@
   import EnterHouseModal from './modules/EnterHouseModal'
   import JDate from '@/components/jeecg/JDate.vue'
   import JSuperQuery from '@/components/jeecg/JSuperQuery.vue'
+  import JDictSelectTag from '@/components/dict/JDictSelectTag.vue'
 
   export default {
     name: 'EnterHouseList',
@@ -164,6 +165,7 @@
       JDate,
       EnterHouseModal,
       JSuperQuery,
+      JDictSelectTag
     },
     data () {
       return {

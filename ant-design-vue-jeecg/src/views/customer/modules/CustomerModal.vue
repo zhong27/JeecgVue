@@ -36,11 +36,13 @@
               <j-dict-select-tag type="list" v-decorator="['accountStatus']" :trigger-change="true" dictCode="account_type" placeholder="请选择账户状态" />
             </a-form-item>
           </a-col>
+<!--
           <a-col :span="24">
             <a-form-item label="营业执照" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <j-image-upload isMultiple  v-decorator="['price']" ></j-image-upload>
             </a-form-item>
           </a-col>
+-->
         </a-row>
       </a-form>
     </a-spin>

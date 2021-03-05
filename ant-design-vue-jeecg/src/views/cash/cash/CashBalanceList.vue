@@ -27,7 +27,7 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <!--<a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>-->
-      <a-button type="primary" icon="download" @click="handleExportXls('资金账户')">导出</a-button>
+      <a-button v-has="'people:button'" type="primary" icon="download" @click="handleExportXls('资金账户')">导出</a-button>
       <!--<a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">-->
         <!--<a-button type="primary" icon="import">导入</a-button>-->
       <!--</a-upload>-->
@@ -83,9 +83,11 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
+<!--
           <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-          <a>删除</a>
+          <a v-has="'people:button'">删除</a>
           </a-popconfirm>
+-->
 
           <a-divider type="vertical" />
           <a @click="handleDetail(record)">详情</a>

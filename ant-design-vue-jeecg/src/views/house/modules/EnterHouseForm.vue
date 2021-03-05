@@ -54,11 +54,13 @@
               <a-input-number v-decorator="['matWeight', validatorRules.matWeight]" placeholder="请输入材料重量" style="width: 100%"/>
             </a-form-item>
           </a-col>
+<!--
           <a-col :span="12">
             <a-form-item label="材料数量" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input-number v-decorator="['matNumber', validatorRules.matNumber]" placeholder="请输入材料数量" style="width: 100%"/>
             </a-form-item>
           </a-col>
+-->
           <a-col :span="12">
             <a-form-item label="仓库" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <j-dict-select-tag v-decorator="['warehouse', validatorRules.warehouse]" :trigger-change="true"

@@ -4,7 +4,7 @@
       <div class="top">
         <div class="header">
           <a href="/">
-            <img src="~@/assets/could.png" class="logo" alt="logo">
+            <img src="~@/assets/cloud.png" class="logo" alt="logo">
             <span class="title">直销云平台</span>
           </a>
         </div>
