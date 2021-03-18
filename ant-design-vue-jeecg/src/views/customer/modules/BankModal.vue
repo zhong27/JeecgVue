@@ -13,7 +13,7 @@
         <a-row>
           <a-col :span="24">
             <a-form-item label="开户银行" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-dict-select-tag type="list" v-decorator="['bankName', validatorRules.bankName]" :trigger-change="true" dictCode="bank" placeholder="请选择开户银行" />
+              <j-dict-select-tag type="list" v-decorator="['bankName']" :trigger-change="true" dictCode="bank" placeholder="请选择开户银行" />
             </a-form-item>
           </a-col>
           <a-col :span="24">

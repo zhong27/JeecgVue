@@ -6,7 +6,7 @@
         <a-row :gutter="24">
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="客户名称">
-              <j-dict-select-tag placeholder="请输入客户名称" dictCode="per_customer,customer_name,customer_name"
+              <j-dict-select-tag placeholder="请输入客户名称" dictCode="man_customer,customer_name,customer_name"
                                  v-model="queryParam.customerName"></j-dict-select-tag>
             </a-form-item>
           </a-col>
@@ -162,7 +162,7 @@
           {
             title: ' 电话号码',
             align: 'center',
-            dataIndex: 'number'
+            dataIndex: 'phone'
           },
           {
             title: '客户类型   ',
