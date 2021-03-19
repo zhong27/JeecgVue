@@ -90,8 +90,8 @@
           },
         },
         url: {
-          add: "/per/customer/add",
-          edit: "/per/customer/edit",
+          add: "/man/customer/add",
+          edit: "/man/customer/edit",
         }
      
       }

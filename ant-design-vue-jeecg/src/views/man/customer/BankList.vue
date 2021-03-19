@@ -155,11 +155,11 @@
           }
         ],
         url: {
-          list: "/per/customer/listBankByMainId",
-          delete: "/per/customer/deleteBank",
-          deleteBatch: "/per/customer/deleteBatchBank",
-          exportXlsUrl: "/per/customer/exportBank",
-          importUrl: "/per/customer/importBank",
+          list: "/man/customer/listBankByMainId",
+          delete: "/man/customer/deleteBank",
+          deleteBatch: "/man/customer/deleteBatchBank",
+          exportXlsUrl: "/man/customer/exportBank",
+          importUrl: "/man/customer/importBank",
         },
         dictOptions:{
          customerType:[],

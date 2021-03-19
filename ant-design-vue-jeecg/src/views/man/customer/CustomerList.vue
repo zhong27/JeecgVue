@@ -192,11 +192,11 @@
           }
         ],
         url: {
-          list: '/per/customer/list',
-          delete: '/per/customer/delete',
-          deleteBatch: '/per/customer/deleteBatch',
-          exportXlsUrl: '/per/customer/exportXls',
-          importExcelUrl: 'per/customer/importExcel'
+          list: '/man/customer/list',
+          delete: '/man/customer/delete',
+          deleteBatch: '/man/customer/deleteBatch',
+          exportXlsUrl: '/man/customer/exportXls',
+          importExcelUrl: 'man/customer/importExcel'
         },
         dictOptions: {
           customerType: [],

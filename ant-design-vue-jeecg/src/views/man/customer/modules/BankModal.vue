@@ -91,8 +91,8 @@
           },
         },
         url: {
-          add: "/per/customer/addBank",
-          edit: "/per/customer/editBank",
+          add: "/man/customer/addBank",
+          edit: "/man/customer/editBank",
         }
 
       }
