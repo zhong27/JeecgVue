@@ -184,11 +184,11 @@
           }
         ],
         url: {
-          list: "/personbus/business/list",
-          delete: "/personbus/business/delete",
-          deleteBatch: "/personbus/business/deleteBatch",
-          exportXlsUrl: "/personbus/business/exportXls",
-          importExcelUrl: "personbus/business/importExcel",
+          list: "/man/business/list",
+          delete: "/man/business/delete",
+          deleteBatch: "/man/business/deleteBatch",
+          exportXlsUrl: "/man/business/exportXls",
+          importExcelUrl: "man/business/importExcel",
           
         },
         dictOptions:{},

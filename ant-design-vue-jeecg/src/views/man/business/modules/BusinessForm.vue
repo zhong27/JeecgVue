@@ -111,9 +111,9 @@
           },
         },
         url: {
-          add: "/personbus/business/add",
-          edit: "/personbus/business/edit",
-          queryById: "/personbus/business/queryById"
+          add: "/man/business/add",
+          edit: "/man/business/edit",
+          queryById: "/man/business/queryById"
         }
       }
     },

@@ -23,7 +23,7 @@
           </a-col>
           <a-col :span="24">
             <a-form-item label=" 电话号码" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['number']" placeholder="请输入 电话号码" ></a-input>
+              <a-input v-decorator="['phone']" placeholder="请输入 电话号码" ></a-input>
             </a-form-item>
           </a-col>
           <a-col :span="24">
@@ -107,7 +107,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'customerName','addres','number','customerType','accountStatus','price'))
+          this.form.setFieldsValue(pick(this.model,'customerName','addres','phone','customerType','accountStatus','price'))
         })
       },
       close () {
@@ -150,7 +150,7 @@
         this.close()
       },
       popupCallback(row){
-        this.form.setFieldsValue(pick(row,'customerName','addres','number','customerType','accountStatus','price'))
+        this.form.setFieldsValue(pick(row,'customerName','addres','phone','customerType','accountStatus','price'))
       },
 
       
