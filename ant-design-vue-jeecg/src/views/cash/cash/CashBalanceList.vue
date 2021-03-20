@@ -6,7 +6,7 @@
         <a-row :gutter="24">
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="资金账户">
-              <j-dict-select-tag placeholder="请选择资金账户" v-model="queryParam.customerName" dictCode="per_customer,customer_name,id"/>
+              <j-dict-select-tag placeholder="请选择资金账户" v-model="queryParam.customerName" dictCode="man_customer,customer_name,id"/>
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
@@ -26,7 +26,7 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <!--<a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>-->
+      <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
       <a-button v-has="'people:button'" type="primary" icon="download" @click="handleExportXls('资金账户')">导出</a-button>
       <!--<a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">-->
         <!--<a-button type="primary" icon="import">导入</a-button>-->
@@ -155,7 +155,7 @@
             }
           },
           {
-            title:'资金账户',
+            title:'账户名称',
             align:"center",
             dataIndex: 'customerName_dictText'
           },
@@ -173,6 +173,11 @@
             title:'已用金额',
             align:"center",
             dataIndex: 'amountUsed'
+          },
+          {
+            title:'退款金额',
+            align:"center",
+            dataIndex: 'refundAmount'
           },
           {
             title: '操作',

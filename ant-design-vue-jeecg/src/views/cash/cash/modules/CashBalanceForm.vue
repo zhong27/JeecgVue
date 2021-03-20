@@ -5,7 +5,7 @@
         <a-row>
           <a-col :span="24">
             <a-form-item label="资金账户" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-dict-select-tag type="list" v-decorator="['customerName', validatorRules.customerName]" :trigger-change="true" dictCode="per_customer,customer_name,id" placeholder="请选择资金账户" />
+              <j-dict-select-tag type="list" v-decorator="['customerName', validatorRules.customerName]" :trigger-change="true" dictCode="man_customer,customer_name,id" placeholder="请选择资金账户" />
             </a-form-item>
           </a-col>
           <a-col :span="24">
@@ -16,6 +16,11 @@
           <a-col :span="24">
             <a-form-item label="可用余额" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input-number v-decorator="['remainMoney']" placeholder="请输入可用余额" style="width: 100%" />
+            </a-form-item>
+          </a-col>
+          <a-col :span="24">
+            <a-form-item label="退款金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input-number v-decorator="['refundAmount']" placeholder="请输入退款金额" style="width: 100%" />
             </a-form-item>
           </a-col>
           <a-col v-if="showFlowSubmitButton" :span="24" style="text-align: center">
@@ -120,7 +125,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'createTime','customerName','totalMoney','remainMoney'))
+          this.form.setFieldsValue(pick(this.model,'createTime','customerName','totalMoney','remainMoney','refundAmount'))
         })
       },
       //渲染流程表单数据
@@ -166,7 +171,7 @@
         })
       },
       popupCallback(row){
-        this.form.setFieldsValue(pick(row,'createTime','customerName','totalMoney','remainMoney'))
+        this.form.setFieldsValue(pick(row,'createTime','customerName','totalMoney','remainMoney','refundAmount'))
       },
     }
   }

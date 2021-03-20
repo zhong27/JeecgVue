@@ -5,7 +5,7 @@
         <a-row>
           <a-col :span="12">
             <a-form-item label="客户" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-dict-select-tag type="list" v-decorator="['customerName', validatorRules.customerName]" :trigger-change="true" dictCode="per_customer,customer_name,id" placeholder="请选择客户" />
+              <j-dict-select-tag type="list" v-decorator="['customerName', validatorRules.customerName]" :trigger-change="true" dictCode="man_customer,customer_name,id" placeholder="请选择客户" />
             </a-form-item>
           </a-col>
           <a-col :span="12">
