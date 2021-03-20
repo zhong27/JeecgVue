@@ -12,14 +12,14 @@
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
-            <a-form-item label="产品大类">
-              <j-dict-select-tag placeholder="请选择产品大类" v-model="queryParam.productClass" dictCode="product_class"/>
+            <a-form-item label="物料种类">
+              <j-dict-select-tag placeholder="请选择物料种类" v-model="queryParam.matType" dictCode="product_class"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :xl="6" :lg="7" :md="8" :sm="24">
               <a-form-item label="材料名称">
-                <a-input placeholder="请输入材料名称" v-model="queryParam.productName"></a-input>
+                <a-input placeholder="请输入材料名称" v-model="queryParam.matName"></a-input>
               </a-form-item>
             </a-col>
           </template>
@@ -163,14 +163,14 @@
             dataIndex: 'createTime'
           },
           {
-            title:'产品大类',
+            title:'物料种类',
             align:"center",
-            dataIndex: 'productClass_dictText'
+            dataIndex: 'matType_dictText'
           },
           {
             title:'材料名称',
             align:"center",
-            dataIndex: 'productName'
+            dataIndex: 'matName'
           },
           {
             title:'材料长度',
@@ -232,8 +232,8 @@
       getSuperFieldList(){
         let fieldList=[];
         fieldList.push({type:'datetime',value:'createTime',text:'创建日期'})
-        fieldList.push({type:'string',value:'productClass',text:'产品大类',dictCode:'product_class'})
-        fieldList.push({type:'string',value:'productName',text:'材料名称',dictCode:''})
+        fieldList.push({type:'string',value:'matType',text:'物料种类',dictCode:'product_class'})
+        fieldList.push({type:'string',value:'matName',text:'材料名称',dictCode:''})
         fieldList.push({type:'BigDecimal',value:'matLen',text:'材料长度',dictCode:''})
         fieldList.push({type:'BigDecimal',value:'matThick',text:'材料厚度',dictCode:''})
         fieldList.push({type:'BigDecimal',value:'matWidth',text:'材料宽度',dictCode:''})

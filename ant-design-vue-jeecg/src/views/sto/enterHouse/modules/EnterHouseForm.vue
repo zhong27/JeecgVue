@@ -6,19 +6,19 @@
           <a-col :span="12">
             <a-form-item label="材料名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <j-popup
-                v-decorator="['productName', validatorRules.productName]"
+                v-decorator="['matName', validatorRules.matName]"
                 :trigger-change="true"
-                org-fields="product_name,product_class,mat_len,mat_width,mat_thick,mat_no,price"
-                dest-fields="productName,productClass,matLen,matWidth,matThick,matNo,price"
+                org-fields="mat_name,mat_type,mat_len,mat_width,mat_thick,mat_no,price"
+                dest-fields="matName,matType,matLen,matWidth,matThick,matNo,price"
                 code="sto_mater_info"
                 @callback="popupCallback"
               />
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item label="产品大类" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-dict-select-tag disabled type="list" v-decorator="['productClass', validatorRules.productClass]"
-                                 :trigger-change="true" dictCode="product_class" placeholder="请选择产品大类"/>
+            <a-form-item label="物料种类" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <j-dict-select-tag disabled type="list" v-decorator="['matType', validatorRules.matType]"
+                                 :trigger-change="true" dictCode="mat_type" placeholder="请选择物料种类"/>
             </a-form-item>
           </a-col>
           <a-col :span="12">
@@ -125,9 +125,9 @@
         },
         confirmLoading: false,
         validatorRules: {
-          productClass: {
+          matType: {
             rules: [
-              { required: true, message: '请输入产品大类!' }
+              { required: true, message: '请输入物料种类!' }
             ]
           },
           matWeight: {
@@ -150,7 +150,7 @@
               { required: true, message: '请选择仓库!' }
             ]
           },
-          productName: {
+          matName: {
             rules: [
               { required: true, message: '请输入材料名称!' }
             ]
@@ -215,7 +215,7 @@
         this.model = Object.assign({}, record)
         this.visible = true
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model, 'createTime', 'productClass', 'productName', 'matLen', 'matThick', 'matWidth', 'matWeight', 'matNumber', 'matNo', 'warehouse','price'))
+          this.form.setFieldsValue(pick(this.model, 'createTime', 'matType', 'matName', 'matLen', 'matThick', 'matWidth', 'matWeight', 'matNumber', 'matNo', 'warehouse','price'))
         })
       },
       //渲染流程表单数据
@@ -261,7 +261,7 @@
         })
       },
       popupCallback(row) {
-        this.form.setFieldsValue(pick(row, 'createTime', 'productClass', 'productName', 'matLen', 'matThick', 'matWidth', 'matWeight', 'matNumber', 'matNo', 'warehouse','price'))
+        this.form.setFieldsValue(pick(row, 'createTime', 'matType', 'matName', 'matLen', 'matThick', 'matWidth', 'matWeight', 'matNumber', 'matNo', 'warehouse','price'))
       }
     }
   }

@@ -10,7 +10,7 @@
           </a-col>
           <a-col :span="12">
             <a-form-item label="仓库地址" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['address', validatorRules.address]" placeholder="请输入仓库地址"  ></a-input>
+              <j-area-linkage v-decorator="['address', validatorRules.address]" placeholder="请输入仓库地址"  ></j-area-linkage>
             </a-form-item>
           </a-col>
           <a-col :span="12">
@@ -43,11 +43,13 @@
   import pick from 'lodash.pick'
   import { validateDuplicateValue } from '@/utils/util'
   import JFormContainer from '@/components/jeecg/JFormContainer'
+  import JAreaLinkage from '@comp/jeecg/JAreaLinkage'
 
   export default {
     name: 'WarehouseForm',
     components: {
       JFormContainer,
+      JAreaLinkage
     },
     props: {
       //流程表单data

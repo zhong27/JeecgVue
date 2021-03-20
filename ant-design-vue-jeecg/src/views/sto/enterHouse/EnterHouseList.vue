@@ -12,14 +12,14 @@
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
-            <a-form-item label="产品大类">
-              <j-dict-select-tag placeholder="请选择产品大类"  dictCode="product_class" v-model="queryParam.productClass" />
+            <a-form-item label="物料种类">
+              <j-dict-select-tag placeholder="请选择物料种类"  dictCode="mat_type" v-model="queryParam.matType" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :xl="6" :lg="7" :md="8" :sm="24">
               <a-form-item label="材料名称">
-                <a-input placeholder="请输入材料名称" v-model="queryParam.productName"></a-input>
+                <a-input placeholder="请输入材料名称" v-model="queryParam.matName"></a-input>
               </a-form-item>
             </a-col>
             <a-col :xl="6" :lg="7" :md="8" :sm="24">
@@ -188,14 +188,14 @@
             dataIndex: 'createTime'
           },
           {
-            title:'产品大类',
+            title:'物料种类',
             align:"center",
-            dataIndex: 'productClass_dictText'
+            dataIndex: 'matType_dictText'
           },
           {
             title:'材料名称',
             align:"center",
-            dataIndex: 'productName'
+            dataIndex: 'matName'
           },
           {
             title:'材料长度',
@@ -274,8 +274,8 @@
       getSuperFieldList(){
         let fieldList=[];
         fieldList.push({type:'datetime',value:'createTime',text:'创建日期'})
-        fieldList.push({type:'popup',value:'productClass',text:'产品大类', popup:{code:'sto_mater_info',field:'product_name',orgFields:'product_name',destFields:'product_name'}})
-        fieldList.push({type:'string',value:'productName',text:'材料名称',dictCode:''})
+        fieldList.push({type:'popup',value:'matType',text:'物料种类', popup:{code:'sto_mater_info',field:'mat_name',orgFields:'mat_name',destFields:'mat_name'}})
+        fieldList.push({type:'string',value:'matName',text:'材料名称',dictCode:''})
         fieldList.push({type:'BigDecimal',value:'matLen',text:'材料长度',dictCode:''})
         fieldList.push({type:'BigDecimal',value:'matThick',text:'材料厚度',dictCode:''})
         fieldList.push({type:'BigDecimal',value:'matWidth',text:'材料宽度',dictCode:''})
