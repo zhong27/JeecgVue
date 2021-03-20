@@ -14,18 +14,18 @@
           <a-col :span="12">
             <a-form-item label="材料名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <j-popup
-                v-decorator="['productName', validatorRules.productName]"
+                v-decorator="['matName', validatorRules.matName]"
                 :trigger-change="true"
-                org-fields="product_name,product_class,mat_len,mat_width,mat_thick,mat_no,warehouse,price"
-                dest-fields="productName,productClass,matLen,matWidth,matThick,matNo,warehouse,price"
+                org-fields="mat_name,mat_type,mat_len,mat_width,mat_thick,mat_no,warehouse,price"
+                dest-fields="matName,matType,matLen,matWidth,matThick,matNo,warehouse,price"
                 code="sto_enter_house"
                 @callback="popupCallback"
                 />
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item label="产品大类" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-dict-select-tag disabled type="list" v-decorator="['productClass', validatorRules.productClass]" :trigger-change="true" dictCode="product_class" placeholder="请选择产品大类" />
+            <a-form-item label="物料种类" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <j-dict-select-tag disabled type="list" v-decorator="['matType', validatorRules.matType]" :trigger-change="true" dictCode="product_class" placeholder="请选择产品大类" />
             </a-form-item>
           </a-col>
           <a-col :span="12">
@@ -116,14 +116,14 @@
 
         confirmLoading: false,
         validatorRules: {
-          productName: {
+          matName: {
             rules: [
               { required: true, message: '请输入材料名称!'},
             ]
           },
-          productClass: {
+          matType: {
             rules: [
-              { required: true, message: '请输入产品大类!'},
+              { required: true, message: '请输入物料种类!'},
             ]
           },
           weight: {
@@ -150,7 +150,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'createBy','createTime','updateBy','updateTime','sysOrgCode','orderId','productName','productClass','matLen','matWidth','matThick','matNo','warehouse','price','num','total','weight'))
+          this.form.setFieldsValue(pick(this.model,'createBy','createTime','updateBy','updateTime','sysOrgCode','orderId','matName','matType','matLen','matWidth','matThick','matNo','warehouse','price','num','total','weight'))
         })
       },
       close () {
@@ -194,7 +194,7 @@
         this.close()
       },
       popupCallback(row){
-        this.form.setFieldsValue(pick(row,'createBy','createTime','updateBy','updateTime','sysOrgCode','orderId','productName','productClass','matLen','matWidth','matThick','matNo','warehouse','price','num','total','weight'))
+        this.form.setFieldsValue(pick(row,'createBy','createTime','updateBy','updateTime','sysOrgCode','orderId','matName','matType','matLen','matWidth','matThick','matNo','warehouse','price','num','total','weight'))
       },
 
 

@@ -13,12 +13,12 @@
         <a-row>
           <a-col :span="12">
             <a-form-item label="客户名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-dict-select-tag type="list" v-decorator="['customer', validatorRules.customer]" :trigger-change="true" dictCode="per_customer,customer_name,id" placeholder="请选择客户名称" />
+              <j-dict-select-tag type="list" v-decorator="['customer', validatorRules.customer]" :trigger-change="true" dictCode="man_customer,customer_name,id" placeholder="请选择客户名称" />
             </a-form-item>
           </a-col>
           <a-col :span="12">
             <a-form-item label="业务员" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-dict-select-tag type="list" v-decorator="['business', validatorRules.business]" :trigger-change="true" dictCode="per_business,name,id" placeholder="请选择业务员" />
+              <j-dict-select-tag type="list" v-decorator="['business', validatorRules.business]" :trigger-change="true" dictCode="man_business,name,id" placeholder="请选择业务员" />
             </a-form-item>
           </a-col>
           <!--<a-col :span="24">-->
@@ -38,7 +38,7 @@
                 :trigger-change="true"
                 org-fields="name,car_no,phone"
                 dest-fields="driver,carNo,phone"
-                code="per_driver"
+                code="man_driver"
                 @callback="popupCallback"
               />
             </a-form-item>

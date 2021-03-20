@@ -133,12 +133,12 @@
           {
             title:'材料名称',
             align:"center",
-            dataIndex: 'productName'
+            dataIndex: 'matName'
           },
           {
-            title:'产品大类',
+            title:'物料种类',
             align:"center",
-            dataIndex: 'productClass_dictText',
+            dataIndex: 'matType_dictText',
           },
           {
             title:'材料长度',

@@ -7,7 +7,7 @@
           <a-col :xl="6" :lg="7" :md="8" :sm="12">
             <a-form-item label="客户名称">
               <j-dict-select-tag placeholder="请选择客户名称" v-model="queryParam.customer"
-                                 dictCode="per_customer,customer_name,id"/>
+                                 dictCode="man_customer,customer_name,id"/>
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="12">
