@@ -108,7 +108,7 @@
       <a-tab-pane tab="司机信息" key="2" >
         <OrderDriverList :mainId="selectedMainId" />
       </a-tab-pane>
-      <a-tab-pane tab="收料人信息" key="3" forceRender>
+      <a-tab-pane tab="收货人信息" key="3" forceRender>
         <OrderConsigneeList :mainId="selectedMainId" />
       </a-tab-pane>
     </a-tabs>

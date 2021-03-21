@@ -18,7 +18,7 @@
           </a-col>
           <a-col :span="24">
             <a-form-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-dict-select-tag type="list" v-decorator="['sex']" :trigger-change="true" dictCode="" placeholder="请选择性别" />
+              <j-dict-select-tag type="list" v-decorator="['sex']" :trigger-change="true" dictCode="sex" placeholder="请选择性别" />
             </a-form-item>
           </a-col>
           <a-col :span="24">

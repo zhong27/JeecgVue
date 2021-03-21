@@ -169,7 +169,12 @@
           {
             title: '司机',
             align: 'center',
-            dataIndex: 'driver'
+            dataIndex: 'driver_dictText'
+          },
+          {
+            title: '收货人',
+            align: 'center',
+            dataIndex: 'consignee_dictText'
           },
           /*
                     {
@@ -348,8 +353,7 @@
         fieldList.push({ type: 'string', value: 'orderNo', text: '订单编号', dictCode: '' })
         fieldList.push({ type: 'BigDecimal', value: 'orderTotal', text: '订单总价', dictCode: '' })
         fieldList.push({ type: 'string', value: 'driver', text: '司机', dictCode: '' })
-        fieldList.push({ type: 'string', value: 'carNo', text: '车牌号', dictCode: '' })
-        fieldList.push({ type: 'string', value: 'phone', text: '电话号码', dictCode: '' })
+        fieldList.push({ type: 'string', value: 'consignee', text: '收货人', dictCode: '' })
         fieldList.push({ type: 'string', value: 'payStatus', text: '支付状态', dictCode: 'pay_status' })
         this.superFieldList = fieldList
       }
