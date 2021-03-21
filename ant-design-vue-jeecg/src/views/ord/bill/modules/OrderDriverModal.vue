@@ -12,33 +12,23 @@
       <a-form :form="form">
         <a-row>
           <a-col :span="24">
-            <a-form-item label="客户" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-search-select-tag v-decorator="['customerId']" dict="man_customer,customer_name,id"  />
+            <a-form-item label="姓名" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入姓名" ></a-input>
             </a-form-item>
           </a-col>
           <a-col :span="24">
-            <a-form-item label="提单编号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['billNo']" placeholder="请输入提单编号" ></a-input>
+            <a-form-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <j-dict-select-tag type="list" v-decorator="['sex']" :trigger-change="true" dictCode="" placeholder="请选择性别" />
             </a-form-item>
           </a-col>
           <a-col :span="24">
-            <a-form-item label="订单编号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['orderNo']" placeholder="请输入订单编号" ></a-input>
+            <a-form-item label="车牌号" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['carNo', validatorRules.carNo]" placeholder="请输入车牌号" ></a-input>
             </a-form-item>
           </a-col>
           <a-col :span="24">
-            <a-form-item label="业务员" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-search-select-tag v-decorator="['business']" dict="man_business,name,id"  />
-            </a-form-item>
-          </a-col>
-          <a-col :span="24">
-            <a-form-item label="总重量" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['totalWeight']" placeholder="请输入总重量" style="width: 100%" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="24">
-            <a-form-item label="总价" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['total']" placeholder="请输入总价" style="width: 100%" />
+            <a-form-item label="电话号码" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['phone', validatorRules.phone]" placeholder="请输入电话号码" ></a-input>
             </a-form-item>
           </a-col>
         </a-row>
@@ -52,12 +42,19 @@
   import { httpAction } from '@/api/manage'
   import pick from 'lodash.pick'
   import { validateDuplicateValue } from '@/utils/util'
-  import JSearchSelectTag from '@/components/dict/JSearchSelectTag'
+  import JDictSelectTag from "@/components/dict/JDictSelectTag"
 
   export default {
-    name: "OrderBillModal",
-    components: { 
-      JSearchSelectTag,
+    name: "OrderDriverModal",
+    components: {
+      JDictSelectTag,
+    },
+    props:{
+      mainId:{
+        type:String,
+        required:false,
+        default:''
+      }
     },
     data () {
       return {
@@ -77,12 +74,27 @@
 
         confirmLoading: false,
         validatorRules: {
+          name: {
+            rules: [
+              { required: true, message: '请输入姓名!'},
+            ]
+          },
+          carNo: {
+            rules: [
+              { required: true, message: '请输入车牌号!'},
+            ]
+          },
+          phone: {
+            rules: [
+              { required: true, message: '请输入电话号码!'},
+            ]
+          },
         },
         url: {
-          add: "/ord/orderBill/add",
-          edit: "/ord/orderBill/edit",
+          add: "/ord/orderBill/addOrderDriver",
+          edit: "/ord/orderBill/editOrderDriver",
         }
-     
+
       }
     },
     created () {
@@ -96,7 +108,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'createBy','createTime','customerId','billNo','orderNo','business','totalWeight','total'))
+          this.form.setFieldsValue(pick(this.model,'createBy','createTime','updateBy','updateTime','sysOrgCode','name','sex','carNo','phone','delFlag','billId'))
         })
       },
       close () {
@@ -119,6 +131,7 @@
                method = 'put';
             }
             let formData = Object.assign(this.model, values);
+            formData['billId'] = this.mainId
             console.log("表单提交数据",formData)
             httpAction(httpurl,formData,method).then((res)=>{
               if(res.success){
@@ -132,17 +145,17 @@
               that.close();
             })
           }
-         
+
         })
       },
       handleCancel () {
         this.close()
       },
       popupCallback(row){
-        this.form.setFieldsValue(pick(row,'createBy','createTime','customerId','billNo','orderNo','business','totalWeight','total'))
+        this.form.setFieldsValue(pick(row,'createBy','createTime','updateBy','updateTime','sysOrgCode','name','sex','carNo','phone','delFlag','billId'))
       },
 
-      
+
     }
   }
 </script>
