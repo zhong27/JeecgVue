@@ -15,6 +15,11 @@
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
+            <a-form-item label="提单状态">
+              <j-search-select-tag placeholder="请选择提单状态" v-model="queryParam.billStatus" dict="bill_status"/>
+            </a-form-item>
+          </a-col>
+          <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
               <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
@@ -33,9 +38,11 @@
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
       <a-button type="primary" icon="download" @click="handleExportXls('提单信息管理')">导出</a-button>
+<!--
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
+-->
       <!-- 高级查询区域 -->
       <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>
     </div>
@@ -83,18 +90,22 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">编辑</a>
+          <a @click="refundBill(record)">退单</a>
 
           <a-divider type="vertical" />
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
+               <a-menu-item>
+              <a @click="handleEdit(record)">编辑</a>
+              </a-menu-item>
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
                   <a>删除</a>
                 </a-popconfirm>
               </a-menu-item>
             </a-menu>
+
           </a-dropdown>
         </span>
 
@@ -187,6 +198,11 @@
             dataIndex: 'total'
           },
           {
+            title:'提单状态',
+            align:"center",
+            dataIndex: 'billStatus_dictText'
+          },
+          {
             title: '操作',
             dataIndex: 'action',
             align:"center",
@@ -201,6 +217,7 @@
           deleteBatch: "/ord/orderBill/deleteBatch",
           exportXlsUrl: "/ord/orderBill/exportXls",
           importExcelUrl: "ord/orderBill/importExcel",
+          refundBill: "cash/refund/refundBill",
         },
         dictOptions:{
         },
@@ -238,6 +255,17 @@
         initDictOptions('man_business,name,id').then((res) => {
           if (res.success) {
             this.$set(this.dictOptions, 'business', res.result)
+          }
+        })
+      },
+      refundBill(record){
+        console.log("退单！",record)
+        var id = {id:record.id}
+        getAction(this.url.refundBill,id).then((res) =>{
+          if (res.success){
+            this.$message.success(res.message)
+          } else{
+            this.$message.error(res.message)
           }
         })
       },

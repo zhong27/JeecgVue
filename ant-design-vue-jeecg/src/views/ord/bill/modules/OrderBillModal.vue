@@ -41,6 +41,11 @@
               <a-input-number v-decorator="['total']" placeholder="请输入总价" style="width: 100%" />
             </a-form-item>
           </a-col>
+          <a-col :span="24">
+            <a-form-item label="提单状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <j-search-select-tag v-decorator="['billStatus']" dict="bill_status" placeholder="请输入提单状态" style="width: 100%" />
+            </a-form-item>
+          </a-col>
         </a-row>
       </a-form>
     </a-spin>
@@ -96,7 +101,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'createBy','createTime','customerId','billNo','orderNo','business','totalWeight','total'))
+          this.form.setFieldsValue(pick(this.model,'createBy','createTime','customerId','billNo','orderNo','business','totalWeight','total','billStatus'))
         })
       },
       close () {
@@ -139,7 +144,7 @@
         this.close()
       },
       popupCallback(row){
-        this.form.setFieldsValue(pick(row,'createBy','createTime','customerId','billNo','orderNo','business','totalWeight','total'))
+        this.form.setFieldsValue(pick(row,'createBy','createTime','customerId','billNo','orderNo','business','totalWeight','total','billStatus'))
       },
 
       
