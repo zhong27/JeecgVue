@@ -90,7 +90,7 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
-          <a @click="refundBill(record)">退单</a>
+          <a @click="refundBill(record)" :disabled="record.billStatus === 'refunding' ? true:false || record.billStatus === 'refunded' ?true:false" >退单</a>
 
           <a-divider type="vertical" />
           <a-dropdown>

@@ -11,6 +11,11 @@
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
+            <a-form-item label="提单编号">
+              <j-input placeholder="请输入提单编号" v-model="queryParam.billNo"/>
+            </a-form-item>
+          </a-col>
+          <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="退款类型">
               <j-dict-select-tag placeholder="请选择退款类型" v-model="queryParam.refundType" dictCode="refund_type"/>
             </a-form-item>
@@ -45,14 +50,14 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="refundGoods" type="primary">退货确认</a-button>
-      <a-button @click="refund" type="primary">退款确认</a-button>
+      <a-button @click="refund" type="primary">退款审核</a-button>
       <a-button type="primary" icon="download" @click="handleExportXls('退款管理')">导出</a-button>
-<!--
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
-                @change="handleImportExcel">
-        <a-button type="primary" icon="import">导入</a-button>
-      </a-upload>
--->
+      <!--
+            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
+                      @change="handleImportExcel">
+              <a-button type="primary" icon="import">导入</a-button>
+            </a-upload>
+      -->
       <!-- 高级查询区域 -->
       <j-super-query :fieldList="superFieldList" ref="superQueryModal"
                      @handleSuperQuery="handleSuperQuery"></j-super-query>
@@ -69,6 +74,33 @@
       </a-dropdown>
     </div>
 
+    <div>
+      <a-modal v-model="refundView" title="退款审核" :width="900" @ok="refundOk">
+        <div>
+          <span>审核结果：</span>
+          <a-radio-group default-value="pass" button-style="solid"  @change="handleChange">
+            <a-radio-button  value="pass">
+              通 过
+            </a-radio-button>
+            <a-radio-button value="unpass">
+              不通过
+            </a-radio-button>
+
+          </a-radio-group>
+        </div>
+        <br/>
+        <a-table
+          ref="tableRefund"
+          bordered
+          rowKey="id"
+          :columns="refundColumns"
+          :dataSource="selectionRows"
+          :loading="loading"
+        >
+        </a-table>
+
+      </a-modal>
+    </div>
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
@@ -76,6 +108,7 @@
         selectedRowKeys.length }}</a>项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
+
 
       <a-table
         ref="table"
@@ -162,6 +195,16 @@
     data() {
       return {
         description: '退款管理管理页面',
+        refundView: false,
+        selectData: 'pass',
+        labelCol: {
+          xs: { span: 24 },
+          sm: { span: 5 }
+        },
+        wrapperCol: {
+          xs: { span: 24 },
+          sm: { span: 16 }
+        },
         // 表头
         columns: [
           {
@@ -238,13 +281,47 @@
             scopedSlots: { customRender: 'action' }
           }
         ],
+        refundColumns: [
+          {
+            title: '创建日期',
+            align: 'center',
+            dataIndex: 'createTime'
+          },
+          {
+            title: '客户',
+            align: 'center',
+            dataIndex: 'customer_dictText'
+          },
+          {
+            title: '退款金额',
+            align: 'center',
+            dataIndex: 'refundMoney'
+          },
+          {
+            title: '退款类型',
+            align: 'center',
+            dataIndex: 'refundType_dictText'
+          },
+          {
+            title: '退货确认',
+            align: 'center',
+            dataIndex: 'refundAgree_dictText'
+          },
+          {
+            title: '退款审核',
+            align: 'center',
+            dataIndex: 'refundStatus_dictText'
+          }
+
+        ],
         url: {
           list: '/cash/refund/list',
           delete: '/cash/refund/delete',
           deleteBatch: '/cash/refund/deleteBatch',
           exportXlsUrl: '/cash/refund/exportXls',
           importExcelUrl: 'cash/refund/importExcel',
-          refundGoods: '/sto/enterHouse/refundGoods'
+          refundGoods: '/sto/enterHouse/refundGoods',
+          refundVerify: '/cash/refund/refundVerify',
 
         },
         dictOptions: {},
@@ -262,6 +339,34 @@
     methods: {
       initDictConfig() {
       },
+      handleChange(e) {
+        this.selectData = e.target.value
+        console.log('selectData', this.selectData)
+      },
+      refund() {
+        this.refundView = true
+      },
+      refundOk() {
+        console.log('selectData', this.selectData)
+        var len = this.selectedRowKeys.length
+        var ids = ''
+        for (let i = 0; i < len; i++) {
+          ids += this.selectedRowKeys[i] + ','
+        }
+        ids = ids.substring(0, ids.length - 1)
+        var refundObj = { id: ids ,status:this.selectData}
+        getAction(this.url.refundVerify, refundObj).then((res) => {
+          if (res.success) {
+            this.$message.success(res.message)
+            this.refundView = false
+            this.loadData()
+          } else {
+            this.$message.error(res.message)
+          }
+
+        })
+
+      },
       refundGoods() {
         var len = this.selectedRowKeys.length
         if (len === 0) {
@@ -271,15 +376,16 @@
           for (let i = 0; i < len; i++) {
             ids += this.selectedRowKeys[i] + ','
           }
-          ids = ids.substring(0,ids.length - 1)
-          var idObj = {id :ids}
-         getAction(this.url.refundGoods,idObj).then((res) => {
-           if (res.success){
-             this.$message.success(res.message)
-           } else{
-             this.$message.error(res.error)
-           }
-         })
+          ids = ids.substring(0, ids.length - 1)
+          var idObj = { id: ids }
+          getAction(this.url.refundGoods, idObj).then((res) => {
+            if (res.success) {
+              this.$message.success(res.message)
+            } else {
+              this.$message.error(res.message)
+            }
+            this.loadData()
+          })
         }
 
       },
