@@ -298,7 +298,7 @@
           this.ipagination.current = 1;
         }
         this.onClearSelected()
-        this.queryParam.queryType = 'unrefund';
+        this.queryParam.queryType = 'refund';
         var params = this.getQueryParams();//查询条件
         console.log("queryParams",this.getQueryParams())
         this.loading = true;
