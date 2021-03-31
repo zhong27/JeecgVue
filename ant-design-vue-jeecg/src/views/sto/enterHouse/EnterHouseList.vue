@@ -284,7 +284,7 @@
         fieldList.push({type:'BigDecimal',value:'matWidth',text:'材料宽度',dictCode:''})
         fieldList.push({type:'BigDecimal',value:'matWeight',text:'材料总重量',dictCode:''})
         fieldList.push({type:'BigDecimal',value:'price',text:'单价',dictCode:''})
-        fieldList.push({type:'int',value:'matNumber',text:'材料总件数',dictCode:''})
+        fieldList.push({type:'BigDecimal',value:'matNumber',text:'材料总件数',dictCode:''})
          fieldList.push({type:'BigDecimal',value:'totalWeight',text:'材料总重量',dictCode:''})
         fieldList.push({type:'string',value:'matNo',text:'材料号',dictCode:''})
         fieldList.push({type:'string',value:'warehouse',text:'仓库',dictCode:''})
