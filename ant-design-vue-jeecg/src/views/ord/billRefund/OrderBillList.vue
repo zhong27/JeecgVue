@@ -36,8 +36,8 @@
     
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('提单信息管理')">导出</a-button>
+      <a-button v-has="'people:button'" @click="handleAdd" type="primary" icon="plus">新增</a-button>
+      <a-button v-has="'people:button'" type="primary" icon="download" @click="handleExportXls('提单信息管理')">导出</a-button>
 <!--
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
@@ -90,18 +90,18 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
-          <a @click="refundBill(record)" :disabled="record.billStatus === 'refunding' ? true:false || record.billStatus === 'refunded' ?true:false" >退单</a>
+          <a v-has="'people:button'" @click="refundBill(record)" :disabled="record.billStatus === 'refunding' ? true:false || record.billStatus === 'refunded' ?true:false" >退单</a>
 
           <a-divider type="vertical" />
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
+            <a v-has="'people:button'" class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
                <a-menu-item>
-              <a @click="handleEdit(record)">编辑</a>
+              <a  @click="handleEdit(record)">编辑</a>
               </a-menu-item>
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                  <a>删除</a>
+                  <a v-has="'people:button'">删除</a>
                 </a-popconfirm>
               </a-menu-item>
             </a-menu>

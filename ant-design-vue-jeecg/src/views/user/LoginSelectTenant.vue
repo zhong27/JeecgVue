@@ -14,12 +14,12 @@
       <a-form-item v-if="isMultiTenant" :labelCol="{span:4}" :wrapperCol="{span:20}" style="margin-bottom:10px" :validate-status="validate_status1">
         <a-tooltip placement="topLeft" >
           <template slot="title">
-            <span>您有多个租户，请选择登录租户</span>
+            <span>您有多个公司，请选择登录公司</span>
           </template>
         <a-avatar style="backgroundColor:#87d068" icon="gold" />
         </a-tooltip>
 
-        <a-select @change="handleTenantChange" :class="{'valid-error':validate_status1=='error'}" placeholder="请选择登录租户" style="margin-left:10px;width: 80%">
+        <a-select @change="handleTenantChange" :class="{'valid-error':validate_status1=='error'}" placeholder="请选择登录公司" style="margin-left:10px;width: 80%">
           <a-icon slot="suffixIcon" type="gold" />
           <a-select-option v-for="d in tenantList" :key="d.id" :value="d.id">
             {{ d.name }}
@@ -77,11 +77,11 @@
     computed:{
       title(){
         if(this.isMultiDepart && this.isMultiTenant){
-          return '请选择租户和部门'
+          return '请选择公司和部门'
         }else if(this.isMultiDepart && !this.isMultiTenant){
           return '请选择部门'
         }else if(!this.isMultiDepart && this.isMultiTenant){
-          return '请选择租户'
+          return '请选择公司'
         }
       }
     },

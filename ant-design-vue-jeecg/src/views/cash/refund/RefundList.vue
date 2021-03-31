@@ -49,9 +49,9 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <a-button @click="refundGoods" type="primary">退货确认</a-button>
-      <a-button @click="refund" type="primary">退款审核</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('退款管理')">导出</a-button>
+      <a-button v-has="'cash:check'" @click="refundGoods" type="primary">退货确认</a-button>
+      <a-button v-has="'cash:check'" @click="refund" type="primary">退款审核</a-button>
+      <a-button v-has="'people:button'" type="primary" icon="download" @click="handleExportXls('退款管理')">导出</a-button>
       <!--
             <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
                       @change="handleImportExcel">
@@ -68,14 +68,14 @@
             删除
           </a-menu-item>
         </a-menu>
-        <a-button style="margin-left: 8px"> 批量操作
+        <a-button v-has="'people:button'" style="margin-left: 8px"> 批量操作
           <a-icon type="down"/>
         </a-button>
       </a-dropdown>
     </div>
 
     <div>
-      <a-modal v-model="refundView" title="退款审核" :width="900" @ok="refundOk">
+      <a-modal  v-model="refundView" title="退款审核" :width="900" @ok="refundOk">
         <div>
           <span>审核结果：</span>
           <a-radio-group default-value="pass" button-style="solid"  @change="handleChange">
@@ -146,11 +146,11 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">编辑</a>
+          <a v-has="'people:button'" @click="handleEdit(record)">编辑</a>
 
           <a-divider type="vertical"/>
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a v-has="'people:button'" class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a @click="handleDetail(record)">详情</a>

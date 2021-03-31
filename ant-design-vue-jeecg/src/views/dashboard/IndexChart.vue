@@ -1,36 +1,42 @@
 <template>
   <div class="page-header-index-wide">
+    <div>
+      <a-carousel arrows autoplay="true">
+        <div
+          slot="prevArrow"
+          slot-scope="props"
+          class="custom-slick-arrow"
+          style="left: 10px;zIndex: 1"
+        >
+          <a-icon type="left-circle" />
+        </div>
+        <div slot="nextArrow" slot-scope="props" class="custom-slick-arrow" style="right: 10px">
+          <a-icon type="right-circle" />
+        </div>
+
+        <div>
+          <img src="~@/assets/3.jpg"  width="1290" align="center" height="160">
+        </div>
+        <div>
+          <img src="~@/assets/2.jpg"  width="1290" align="center" height="160">
+        </div>
+        <div>
+          <img src="~@/assets/1.jpg"  width="1290" align="center" height="160">
+        </div>
+
+
+      </a-carousel>
+    </div>
+<!--
+    <span>
+      <img src="~@/assets/indexImg.jpg" :style="{ marginBottom: '24px' }"  width="550" align="right" height="420">
+    </span>
+-->
+
+<!--
     <a-row :gutter="24">
-      <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
-        <chart-card :loading="loading" title="总销售额" total="￥126,560">
-          <a-tooltip title="指标说明" slot="action">
-            <a-icon type="info-circle-o" />
-          </a-tooltip>
-          <div>
-            <trend flag="up" style="margin-right: 16px;">
-              <span slot="term">周同比</span>
-              12%
-            </trend>
-            <trend flag="down">
-              <span slot="term">日同比</span>
-              11%
-            </trend>
-          </div>
-          <template slot="footer">日均销售额<span>￥ 234.56</span></template>
-        </chart-card>
-      </a-col>
-      <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
-        <chart-card :loading="loading" title="订单量" :total="8846 | NumberFormat">
-          <a-tooltip title="指标说明" slot="action">
-            <a-icon type="info-circle-o" />
-          </a-tooltip>
-          <div>
-            <mini-area />
-          </div>
-          <template slot="footer">日订单量<span> {{ '1234' | NumberFormat }}</span></template>
-        </chart-card>
-      </a-col>
-      <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
+
+      <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }" :align="center">
         <chart-card :loading="loading" title="支付笔数" :total="6560 | NumberFormat">
           <a-tooltip title="指标说明" slot="action">
             <a-icon type="info-circle-o" />
@@ -41,7 +47,7 @@
           <template slot="footer">转化率 <span>60%</span></template>
         </chart-card>
       </a-col>
-      <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
+      <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }" :align="center">
         <chart-card :loading="loading" title="运营活动效果" total="78%">
           <a-tooltip title="指标说明" slot="action">
             <a-icon type="info-circle-o" />
@@ -62,6 +68,7 @@
         </chart-card>
       </a-col>
     </a-row>
+-->
 
 <!--
     <a-card :loading="loading" :bordered="false" :body-style="{padding: '0'}">
@@ -101,8 +108,8 @@
     </a-card>
 -->
 
-    <a-row>
-      <a-col :span="24">
+    <a-row >
+      <a-col :span="24">..
         <a-card :loading="loading" :bordered="false" title="最近一周访问量统计" :style="{ marginTop: '24px' }">
           <a-row>
             <a-col :span="6">
@@ -201,6 +208,7 @@
     },
     methods: {
       initLogInfo () {
+        console.log("flag")
         getLoginfo(null).then((res)=>{
           if(res.success){
             Object.keys(res.result).forEach(key=>{
@@ -219,7 +227,9 @@
   }
 </script>
 
-<style lang="less" scoped>
+<style  scoped>
+
+
   .circle-cust{
     position: relative;
     top: 28px;
@@ -267,4 +277,32 @@
       }
     }
   }
+
+  .ant-carousel >>> .slick-slide {
+    text-align: center;
+    height: 160px;
+    line-height: 160px;
+    background: #364d79;
+    overflow: hidden;
+  }
+
+  .ant-carousel >>> .custom-slick-arrow {
+    width: 25px;
+    height: 25px;
+    font-size: 25px;
+    color: #fff;
+    background-color: rgba(31, 45, 61, 0.11);
+    opacity: 0.3;
+  }
+  .ant-carousel >>> .custom-slick-arrow:before {
+    display: none;
+  }
+  .ant-carousel >>> .custom-slick-arrow:hover {
+    opacity: 0.5;
+  }
+
+  .ant-carousel >>> .slick-slide h3 {
+    color: #fff;
+  }
+
 </style>
