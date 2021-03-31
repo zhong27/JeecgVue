@@ -188,6 +188,16 @@
             dataIndex: 'matWidth'
           },
           {
+            title:'材料件数',
+            align:"center",
+            dataIndex: 'matNumber'
+          },
+          {
+            title:'材料重量',
+            align:"center",
+            dataIndex: 'matWeight'
+          },
+          {
             title:'单价',
             align:"center",
             dataIndex: 'price'
@@ -237,6 +247,8 @@
         fieldList.push({type:'BigDecimal',value:'matLen',text:'材料长度',dictCode:''})
         fieldList.push({type:'BigDecimal',value:'matThick',text:'材料厚度',dictCode:''})
         fieldList.push({type:'BigDecimal',value:'matWidth',text:'材料宽度',dictCode:''})
+        fieldList.push({type:'BigDecimal',value:'matWeight',text:'材料重量',dictCode:''})
+        fieldList.push({type:'BigDecimal',value:'matNumber',text:'材料件数',dictCode:''})
         fieldList.push({type:'BigDecimal',value:'price',text:'单价',dictCode:''})
         fieldList.push({type:'string',value:'matNo',text:'材料号',dictCode:''})
         this.superFieldList = fieldList

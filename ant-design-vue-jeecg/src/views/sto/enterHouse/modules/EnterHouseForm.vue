@@ -8,11 +8,17 @@
               <j-popup
                 v-decorator="['matName', validatorRules.matName]"
                 :trigger-change="true"
-                org-fields="mat_name,mat_type,mat_len,mat_width,mat_thick,mat_no,price"
-                dest-fields="matName,matType,matLen,matWidth,matThick,matNo,price"
+                org-fields="mat_name,mat_type,mat_len,mat_width,mat_thick,mat_no,price,mat_number,mat_weight"
+                dest-fields="matName,matType,matLen,matWidth,matThick,matNo,price,matNumber,matWeight"
                 code="sto_mater_info"
                 @callback="popupCallback"
               />
+            </a-form-item>
+          </a-col>
+          <a-col :span="12">
+            <a-form-item label="仓库" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <j-dict-select-tag v-decorator="['warehouse', validatorRules.warehouse]" :trigger-change="true"
+                                 dictCode="sto_warehouse,house_name,id" placeholder="请输入仓库"></j-dict-select-tag>
             </a-form-item>
           </a-col>
           <a-col :span="12">
@@ -40,6 +46,16 @@
             </a-form-item>
           </a-col>
           <a-col :span="12">
+            <a-form-item label="材料件数" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input-number disabled v-decorator="['matNumber', validatorRules.matNumber]" placeholder="请输入材料件数" style="width: 100%"/>
+            </a-form-item>
+          </a-col>
+          <a-col :span="12">
+            <a-form-item label="材料重量" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input-number disabled  v-decorator="['matWeight', validatorRules.matWeight]" placeholder="请输入材料重量" style="width: 100%"/>
+            </a-form-item>
+          </a-col>
+          <a-col :span="12">
             <a-form-item label="材料号" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input disabled v-decorator="['matNo', validatorRules.matNo]" placeholder="请输入材料号"></a-input>
             </a-form-item>
@@ -49,24 +65,7 @@
               <a-input-number disabled v-decorator="['price', validatorRules.price]" placeholder="请输入单价" style="width: 100%"/>
             </a-form-item>
           </a-col>
-          <a-col :span="12">
-            <a-form-item label="材料重量" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['matWeight', validatorRules.matWeight]" placeholder="请输入材料重量" style="width: 100%"/>
-            </a-form-item>
-          </a-col>
-<!--
-          <a-col :span="12">
-            <a-form-item label="材料数量" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['matNumber', validatorRules.matNumber]" placeholder="请输入材料数量" style="width: 100%"/>
-            </a-form-item>
-          </a-col>
--->
-          <a-col :span="12">
-            <a-form-item label="仓库" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-dict-select-tag v-decorator="['warehouse', validatorRules.warehouse]" :trigger-change="true"
-                                 dictCode="sto_warehouse,house_name,id" placeholder="请输入仓库"></j-dict-select-tag>
-            </a-form-item>
-          </a-col>
+
           <a-col v-if="showFlowSubmitButton" :span="24" style="text-align: center">
             <a-button @click="submitForm">提 交</a-button>
           </a-col>

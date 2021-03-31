@@ -29,6 +29,16 @@
             </a-form-item>
           </a-col>
           <a-col :span="12">
+            <a-form-item label="材料件数" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input-number v-decorator="['matNumber', validatorRules.matNumber]" placeholder="请输入材料件数" style="width: 100%" />
+            </a-form-item>
+          </a-col>
+          <a-col :span="12">
+            <a-form-item label="材料重量" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input-number v-decorator="['matWeight', validatorRules.matWeight]" placeholder="请输入材料重量" style="width: 100%" />
+            </a-form-item>
+          </a-col>
+          <a-col :span="12">
             <a-form-item label="单价" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input-number v-decorator="['price', validatorRules.price]" placeholder="请输入单价" style="width: 100%" />
             </a-form-item>
@@ -120,6 +130,16 @@
               { required: true, message: '请输入材料厚度!'},
             ]
           },
+          matNumber: {
+            rules: [
+              { required: true, message: '请输入材料件数!'},
+            ]
+          },
+          matWeight: {
+            rules: [
+              { required: true, message: '请输入材料重量!'},
+            ]
+          },
           matNo: {
             rules: [
               { required: true, message: '请输入材料号!'},
@@ -170,7 +190,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'createTime','matType','matName','matLen','matThick','matWidth','matNo','price'))
+          this.form.setFieldsValue(pick(this.model,'createTime','matType','matName','matLen','matThick','matWidth','matNumber','matWeight','matNo','price'))
         })
       },
       //渲染流程表单数据
@@ -216,7 +236,7 @@
         })
       },
       popupCallback(row){
-        this.form.setFieldsValue(pick(row,'createTime','matType','matName','matLen','matThick','matWidth','matNo','price'))
+        this.form.setFieldsValue(pick(row,'createTime','matType','matName','matLen','matThick','matWidth','matNumber','matWeight','matNo','price'))
       },
     }
   }
