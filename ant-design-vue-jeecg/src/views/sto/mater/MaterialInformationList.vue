@@ -178,19 +178,19 @@
             dataIndex: 'matLen'
           },
           {
-            title:'材料厚度',
-            align:"center",
-            dataIndex: 'matThick'
-          },
-          {
             title:'材料宽度',
             align:"center",
             dataIndex: 'matWidth'
           },
           {
-            title:'材料件数',
+            title:'材料厚度',
             align:"center",
-            dataIndex: 'matNumber'
+            dataIndex: 'matThick'
+          },
+          {
+            title:'材料号',
+            align:"center",
+            dataIndex: 'matNo'
           },
           {
             title:'材料重量',
@@ -198,14 +198,14 @@
             dataIndex: 'matWeight'
           },
           {
+            title:'材料件数',
+            align:"center",
+            dataIndex: 'matNumber'
+          },
+          {
             title:'单价',
             align:"center",
             dataIndex: 'price'
-          },
-          {
-            title:'材料号',
-            align:"center",
-            dataIndex: 'matNo'
           },
           {
             title: '操作',

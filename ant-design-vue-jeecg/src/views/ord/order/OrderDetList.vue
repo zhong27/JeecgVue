@@ -74,7 +74,7 @@
       </a-table>
     </div>
 
-    <orderDet-modal ref="modalForm" @ok="modalFormOk" :mainId="mainId"></orderDet-modal>
+    <orderDet-modal ref="modalForm" @ok="orderDetLoadData" :mainId="mainId"></orderDet-modal>
   </a-card>
 </template>
 
@@ -221,6 +221,11 @@
         this.dataSource=[]
         this.selectedRowKeys=[]
         this.ipagination.current = 1
+      },
+      orderDetLoadData(){
+        this.loadData()
+        debugger
+        this.$emit('ok');
       },
       getSuperFieldList(){
         let fieldList=[];

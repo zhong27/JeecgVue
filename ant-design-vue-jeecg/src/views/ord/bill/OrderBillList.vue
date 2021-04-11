@@ -6,7 +6,7 @@
         <a-row :gutter="24">
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="客户">
-              <j-search-select-tag placeholder="请选择客户" v-model="queryParam.customerId" dict="man_customer,customer_name,id"/>
+              <j-search-select-tag placeholder="请选择客户" v-model="queryParam.customerId" dict="man_customer where del_flag = 0,customer_name,id"/>
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
@@ -92,6 +92,8 @@
         <span slot="action" slot-scope="text, record">
           <a v-has="'people:button'" @click="refundBill(record)" :disabled="record.billStatus === 'refunding' ? true:false || record.billStatus === 'refunded' ?true:false" >退单</a>
 
+          <a-divider type="vertical" />
+          <a v-has="'people:button'" @click="pickUpConfirm(record)" :disabled="record.billStatus === 'taking' ?false:true" >取件确认</a>
           <a-divider type="vertical" />
           <a-dropdown>
             <a v-has="'people:button'" class="ant-dropdown-link">更多 <a-icon type="down" /></a>
@@ -218,6 +220,7 @@
           exportXlsUrl: "/ord/orderBill/exportXls",
           importExcelUrl: "ord/orderBill/importExcel",
           refundBill: "cash/refund/refundBill",
+          pickUpConfirm: "ord/orderBill/pickUpConfirm",
         },
         dictOptions:{
         },
@@ -267,6 +270,19 @@
           } else{
             this.$message.error(res.message)
           }
+          this.loadData()
+        })
+      },
+      //收件确认
+      pickUpConfirm(record){
+        var id = {id:record.id}
+        getAction(this.url.pickUpConfirm,id).then((res) =>{
+          if (res.success){
+            this.$message.success(res.message)
+          } else{
+            this.$message.error(res.message)
+          }
+          this.loadData()
         })
       },
       clickThenSelect(record) {

@@ -13,7 +13,7 @@
         <a-row>
           <a-col :span="24">
             <a-form-item label="客户名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-dict-select-tag type="list" v-decorator="['customer', validatorRules.customer]" :trigger-change="true" dictCode="man_customer,customer_name,id" placeholder="请选择客户名称" />
+              <j-dict-select-tag type="list" v-decorator="['customer', validatorRules.customer]" :trigger-change="true" dictCode="man_customer where del_flag = 0,customer_name,id" placeholder="请选择客户名称" />
             </a-form-item>
           </a-col>
           <a-col :span="24">
@@ -171,12 +171,13 @@
               if(res.success){
                 that.$message.success(res.message);
                 that.$emit('ok');
+                that.close();
               }else{
                 that.$message.warning(res.message);
               }
             }).finally(() => {
               that.confirmLoading = false;
-              that.close();
+
             })
           }
          

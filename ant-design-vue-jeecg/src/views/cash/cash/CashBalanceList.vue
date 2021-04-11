@@ -6,7 +6,7 @@
         <a-row :gutter="24">
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="资金账户">
-              <j-dict-select-tag placeholder="请选择资金账户" v-model="queryParam.customerName" dictCode="man_customer,customer_name,id"/>
+              <j-dict-select-tag placeholder="请选择资金账户" v-model="queryParam.customerName" dictCode="man_customer where del_flag = 0,customer_name,id"/>
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">

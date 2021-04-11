@@ -8,11 +8,11 @@
               <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入姓名"  ></a-input>
             </a-form-item>
           </a-col>
-          <a-col :span="24">
+        <!--  <a-col :span="24">
             <a-form-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <j-dict-select-tag type="list" v-decorator="['sex', validatorRules.sex]" :trigger-change="true" dictCode="sex" placeholder="请选择性别" />
             </a-form-item>
-          </a-col>
+          </a-col>-->
           <a-col :span="24">
             <a-form-item label="车牌号" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input v-decorator="['carNo', validatorRules.carNo]" placeholder="请输入车牌号"  ></a-input>
@@ -20,7 +20,15 @@
           </a-col>
           <a-col :span="24">
             <a-form-item label="电话号码" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['phone']" placeholder="请输入电话号码"  ></a-input>
+              <a-input v-decorator="['phone', validatorRules.phone]" placeholder="请输入电话号码"  ></a-input>
+            </a-form-item>
+          </a-col>
+          <a-col :span="24">
+            <a-form-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-radio-group  v-decorator="[ 'sex', {'initialValue':'1'}]">
+                <a-radio value="1">男</a-radio>
+                <a-radio value="2">女</a-radio>
+              </a-radio-group>
             </a-form-item>
           </a-col>
           <a-col v-if="showFlowSubmitButton" :span="24" style="text-align: center">
@@ -91,6 +99,11 @@
             ]
           },
           carNo: {
+            rules: [
+              { required: true, message: '请输入车牌号!'},
+            ]
+          },
+          phone: {
             rules: [
               { required: true, message: '请输入车牌号!'},
             ]

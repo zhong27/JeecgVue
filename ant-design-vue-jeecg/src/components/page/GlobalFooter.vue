@@ -1,9 +1,9 @@
 <template>
   <div class="footer">
     <div class="copyright">
-      ZXYPT
+      GMYXT
       <a-icon type="copyright"/>
-      2021 <span>直销云平台 出品</span>
+      2021 <span>钢贸云系统 出品</span>
     </div>
 <!--
     <div class="links">

@@ -6,7 +6,7 @@
         <a-row :gutter="24">
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="客户名称">
-              <j-dict-select-tag placeholder="请输入客户名称" dictCode="man_customer,customer_name,customer_name"
+              <j-dict-select-tag placeholder="请输入客户名称" dictCode="man_customer where del_flag = 0,customer_name,customer_name"
                                  v-model="queryParam.customerName"></j-dict-select-tag>
             </a-form-item>
           </a-col>
@@ -86,8 +86,10 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
-          <a v-has="'people:button'" @click="handleEdit(record)">编辑</a>
-
+          <!--<a v-has="'people:button'" @click="handleEdit(record)">编辑</a>-->
+          <a v-has="'people:button'" @click="frozen(record)">冻结账户</a>
+          <a-divider type="vertical"/>
+          <a v-has="'people:button'" @click="normal(record)">解冻账户</a>
           <a-divider type="vertical"/>
           <a-dropdown>
             <a v-has="'people:button'" class="ant-dropdown-link">更多 <a-icon type="down"/></a>
@@ -196,7 +198,9 @@
           delete: '/man/customer/delete',
           deleteBatch: '/man/customer/deleteBatch',
           exportXlsUrl: '/man/customer/exportXls',
-          importExcelUrl: 'man/customer/importExcel'
+          importExcelUrl: 'man/customer/importExcel',
+          customerForzen: 'man/customer/customerForzen',
+          customerNormal: 'man/customer/customerNormal'
         },
         dictOptions: {
           customerType: [],
@@ -230,6 +234,26 @@
     methods: {
       getPcaText(code) {
         return this.pcaData.getText(code)
+      },
+      frozen(record) {
+        getAction(this.url.customerForzen,{id:record.id}).then((res)=>{
+          if (res.success){
+              this.$message.success(res.message)
+            } else{
+            this.$message.error(res.message)
+            }
+            this.loadData()
+          })
+      },
+      normal(record) {
+        getAction(this.url.customerNormal,{id:record.id}).then((res)=>{
+          if (res.success){
+            this.$message.success(res.message)
+          } else{
+            this.$message.error(res.message)
+          }
+          this.loadData()
+        })
       },
       initDictConfig() {
         initDictOptions('customer_type').then((res) => {

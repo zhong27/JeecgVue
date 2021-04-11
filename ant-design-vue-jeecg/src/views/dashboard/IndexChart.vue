@@ -14,14 +14,14 @@
           <a-icon type="right-circle" />
         </div>
 
-        <div>
-          <img src="~@/assets/3.jpg"  width="1290" align="center" height="160">
+        <div align="center">
+          <img src="~@/assets/4.jpg"  width="1200" align="center" height="160">
         </div>
-        <div>
-          <img src="~@/assets/2.jpg"  width="1290" align="center" height="160">
+        <div align="center">
+          <img src="~@/assets/2.jpg"  width="1200" align="center" height="160">
         </div>
-        <div>
-          <img src="~@/assets/1.jpg"  width="1290" align="center" height="160">
+        <div align="center">
+          <img src="~@/assets/1.jpg"  width="1200" align="center" height="160">
         </div>
 
 
@@ -219,6 +219,7 @@
         })
         getVisitInfo().then(res=>{
           if(res.success){
+            console.log("res",res)
              this.visitInfo = res.result;
            }
          })
@@ -282,7 +283,7 @@
     text-align: center;
     height: 160px;
     line-height: 160px;
-    background: #364d79;
+    background: #4A708B;
     overflow: hidden;
   }
 

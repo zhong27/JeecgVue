@@ -18,22 +18,31 @@
           </a-col>
           <a-col :span="24">
             <a-form-item label="地址" :labelCol="labelCol" :wrapperCol="wrapperCol">
-		      <j-area-linkage type="cascader" v-decorator="['addres']" placeholder="请输入省市区" />
+		      <j-area-linkage type="cascader" v-decorator="['addres',validatorRules.addres]" placeholder="请输入省市区" />
             </a-form-item>
           </a-col>
           <a-col :span="24">
             <a-form-item label=" 电话号码" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['phone']" placeholder="请输入 电话号码" ></a-input>
+              <a-input v-decorator="['phone',validatorRules.phone]" placeholder="请输入 电话号码" ></a-input>
             </a-form-item>
           </a-col>
           <a-col :span="24">
             <a-form-item label="客户类型   " :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-dict-select-tag type="list" v-decorator="['customerType']" :trigger-change="true" dictCode="customer_type" placeholder="请选择客户类型   " />
+              <a-radio-group buttonStyle="solid" v-decorator="[ 'customerType', {'initialValue':'common'}]">
+                <a-radio disabled value="common">普通客户</a-radio>
+                <a-radio disabled value="start">星级客户</a-radio>
+              </a-radio-group>
+              <!--<j-dict-select-tag type="list" v-decorator="['customerType']" :trigger-change="true" dictCode="customer_type" placeholder="请选择客户类型   " />-->
             </a-form-item>
           </a-col>
           <a-col :span="24">
             <a-form-item label="账户状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-dict-select-tag type="list" v-decorator="['accountStatus']" :trigger-change="true" dictCode="account_type" placeholder="请选择账户状态" />
+              <a-radio-group buttonStyle="solid" v-decorator="[ 'accountStatus', {'initialValue':'normal'}]">
+                <a-radio-button disabled value="normal">正常</a-radio-button>
+                <a-radio-button disabled value="frozen">冻结</a-radio-button>
+              </a-radio-group>
+
+              <!--<j-dict-select-tag type="list" v-decorator="['accountStatus']" :trigger-change="true" dictCode="account_type" placeholder="请选择账户状态" />-->
             </a-form-item>
           </a-col>
 <!--
@@ -86,6 +95,17 @@
           customerName: {
             rules: [
               { required: true, message: '请输入客户名称!'},
+            ]
+          },
+          phone: {
+            rules: [
+              { required: true, message: '请输入电话号码!'},
+              { pattern: /^1[3456789]\d{9}$/, message: '请输入正确的手机号码!'},
+            ]
+          },
+          addres: {
+            rules: [
+              { required: true, message: '请输入地址!'},
             ]
           },
         },

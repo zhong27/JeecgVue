@@ -9,11 +9,6 @@
             </a-form-item>
           </a-col>
           <a-col :span="24">
-            <a-form-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-dict-select-tag type="list" v-decorator="['sex', validatorRules.sex]" :trigger-change="true" dictCode="sex" placeholder="请选择性别" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="24">
             <a-form-item label="生日" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <j-date placeholder="请选择生日" v-decorator="['birth', validatorRules.birth]" :trigger-change="true" style="width: 100%" />
             </a-form-item>
@@ -21,6 +16,16 @@
           <a-col :span="24">
             <a-form-item label="联系电话" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input v-decorator="['phone', validatorRules.phone]" placeholder="请输入联系电话"  ></a-input>
+            </a-form-item>
+          </a-col>
+          <a-col :span="24">
+            <a-form-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-radio-group  v-decorator="[ 'sex', {'initialValue':'1'}]">
+                <a-radio value="1">男</a-radio>
+                <a-radio value="2">女</a-radio>
+              </a-radio-group>
+
+              <!--<j-dict-select-tag type="list" v-decorator="['sex', validatorRules.sex]" :trigger-change="true" dictCode="sex" placeholder="请选择性别" />-->
             </a-form-item>
           </a-col>
 <!--

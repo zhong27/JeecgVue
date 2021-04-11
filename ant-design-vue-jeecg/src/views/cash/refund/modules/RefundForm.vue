@@ -10,7 +10,7 @@
           </a-col>
           <a-col :span="12">
             <a-form-item label="客户" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-search-select-tag v-decorator="['customer']" dict="man_customer,customer_name,id"  />
+              <j-search-select-tag v-decorator="['customer']" dict="man_customer where del_flag = 0,customer_name,id"  />
             </a-form-item>
           </a-col>
           <a-col :span="12">

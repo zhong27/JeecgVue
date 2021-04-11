@@ -7,7 +7,7 @@
           <a-col :xl="6" :lg="7" :md="8" :sm="12">
             <a-form-item label="客户名称">
               <j-dict-select-tag placeholder="请选择客户名称" v-model="queryParam.customer"
-                                 dictCode="man_customer,customer_name,id"/>
+                                 dictCode="man_customer where del_flag = 0,customer_name,id"/>
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="12">
@@ -118,7 +118,7 @@
 
     <a-tabs defaultActiveKey="1">
       <a-tab-pane tab="订单明细表" key="1">
-        <OrderDetList :mainId="selectedMainId"/>
+        <OrderDetList ref="orderBookingModalForm" @ok="orderBookingLoadData" :mainId="selectedMainId"/>
       </a-tab-pane>
     </a-tabs>
 
@@ -262,6 +262,9 @@
             this.$set(this.dictOptions, 'payStatus', res.result)
           }
         })
+      },
+      orderBookingLoadData(){
+        this.loadData();
       },
       changePayStatus() {
         if (this.selectedRowKeys.length === 0) {

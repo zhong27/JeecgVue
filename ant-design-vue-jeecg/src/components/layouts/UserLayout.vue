@@ -4,12 +4,12 @@
       <div class="top">
         <div class="header">
           <a href="/">
-            <img src="~@/assets/cloud.png" class="logo" alt="logo">
-            <span class="title">直销云平台</span>
+            <img src="~@/assets/computer.png" class="logo" alt="logo">
+            <span class="title">钢贸云系统</span>
           </a>
         </div>
         <div class="desc">
-          ZHI XIAO YUN
+          GANG MAO YUN XI TONG
         </div>
       </div>
 
@@ -24,7 +24,7 @@
         </div>
 -->
         <div class="copyright">
-          ZXYPT &copy; 2021 <a target="_blank">直销云平台</a> 出品
+          GMYXT &copy; 2021 <a target="_blank">钢贸云系统</a> 出品
         </div>
       </div>
     </div>

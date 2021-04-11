@@ -19,18 +19,18 @@
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item label="材料厚度" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['matThick', validatorRules.matThick]" placeholder="请输入材料厚度" style="width: 100%" />
-            </a-form-item>
-          </a-col>
-          <a-col :span="12">
             <a-form-item label="材料宽度" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input-number v-decorator="['matWidth', validatorRules.matWidth]" placeholder="请输入材料宽度" style="width: 100%" />
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item label="材料件数" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['matNumber', validatorRules.matNumber]" placeholder="请输入材料件数" style="width: 100%" />
+            <a-form-item label="材料厚度" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input-number v-decorator="['matThick', validatorRules.matThick]" placeholder="请输入材料厚度" style="width: 100%" />
+            </a-form-item>
+          </a-col>
+          <a-col :span="12">
+            <a-form-item label="材料号" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input v-decorator="['matNo', validatorRules.matNo]" placeholder="请输入材料号" style="width: 100%" />
             </a-form-item>
           </a-col>
           <a-col :span="12">
@@ -39,13 +39,14 @@
             </a-form-item>
           </a-col>
           <a-col :span="12">
-            <a-form-item label="单价" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input-number v-decorator="['price', validatorRules.price]" placeholder="请输入单价" style="width: 100%" />
+            <a-form-item label="材料件数" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input-number v-decorator="['matNumber', validatorRules.matNumber]" placeholder="请输入材料件数" style="width: 100%" />
             </a-form-item>
           </a-col>
+
           <a-col :span="12">
-            <a-form-item label="材料号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <a-input v-decorator="['matNo', validatorRules.matNo]" placeholder="请输入材料号" style="width: 100%" />
+            <a-form-item label="单价" :labelCol="labelCol" :wrapperCol="wrapperCol">
+              <a-input-number v-decorator="['price', validatorRules.price]" placeholder="请输入单价" style="width: 100%" />
             </a-form-item>
           </a-col>
           <a-col v-if="showFlowSubmitButton" :span="24" style="text-align: center">

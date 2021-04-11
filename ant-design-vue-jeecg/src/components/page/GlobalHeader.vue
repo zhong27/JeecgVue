@@ -17,8 +17,8 @@
         :type="collapsed ? 'menu-unfold' : 'menu-fold'"
         @click="toggle"/>
 
-      <span v-if="device === 'desktop'">欢迎进入 直销云平台</span>
-      <span v-else>直销云平台</span>
+      <span v-if="device === 'desktop'">欢迎进入 钢贸云系统</span>
+      <span v-else>钢贸云系统</span>
 
       <user-menu :theme="theme"/>
     </div>

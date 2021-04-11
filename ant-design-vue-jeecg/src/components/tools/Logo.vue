@@ -4,7 +4,7 @@
 
       <!-- update-begin- author:sunjianlei --- date:20190814 --- for: logo颜色根据主题颜色变化 -->
       <!--<img v-if="navTheme === 'dark'" src="~@/assets/logo-white.png" alt="logo">-->
-      <img src="~@/assets/cloud.png" alt="logo">
+      <img src="~@/assets/computer.png" alt="logo">
       <!-- update-begin- author:sunjianlei --- date:20190814 --- for: logo颜色根据主题颜色变化 -->
 
       <h1 v-if="showTitle">{{ title }}</h1>
@@ -21,7 +21,7 @@
     props: {
       title: {
         type: String,
-        default: '直销云平台',
+        default: '钢贸云系统',
         required: false
       },
       showTitle: {

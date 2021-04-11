@@ -7,7 +7,7 @@
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="客户">
               <j-search-select-tag placeholder="请选择客户" v-model="queryParam.customer"
-                                   dict="man_customer,customer_name,id"/>
+                                   dict="man_customer where del_flag = 0,customer_name,id"/>
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
