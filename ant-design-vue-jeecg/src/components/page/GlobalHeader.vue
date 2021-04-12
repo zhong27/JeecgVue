@@ -17,8 +17,10 @@
         :type="collapsed ? 'menu-unfold' : 'menu-fold'"
         @click="toggle"/>
 
-      <span v-if="device === 'desktop'">欢迎进入 钢贸云系统</span>
+      <span v-if="device === 'desktop'">欢迎进入  钢贸云系统</span>
       <span v-else>钢贸云系统</span>
+      <span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;公司：</span>
+      <span><a style="font-size: 16px">{{companyName}}</a></span>
 
       <user-menu :theme="theme"/>
     </div>
@@ -49,8 +51,10 @@
   import UserMenu from '../tools/UserMenu'
   import SMenu from '../menu/'
   import Logo from '../tools/Logo'
+  import store from '@/store'
 
   import { mixin } from '@/utils/mixin.js'
+  import { httpAction, getAction } from '@/api/manage'
 
   export default {
     name: 'GlobalHeader',
@@ -96,6 +100,7 @@
           headerIndexRight: {},
           topSmenuStyle: {}
         },
+        companyName: '',
         chatStatus: '',
       }
     },
@@ -120,6 +125,9 @@
       if (this.mode === 'topmenu') {
         this.buildTopMenuStyle()
       }
+
+      this.getCompanyName()
+
       //update-end--author:sunjianlei---date:20190508------for: 顶部导航栏过长时显示更多按钮-----
     },
     methods: {
@@ -134,6 +142,16 @@
         } else {
           this.headerBarFixed = false
         }
+      },
+      getCompanyName(){
+        getAction('/sys/getCompanyName', { id: '0' }).then((res) => {
+          if (res.success) {
+            this.companyName = res.result;
+           console.log("resCompany:",res.result)
+          }else{
+            this.$message.error(res.message)
+          }
+        })
       },
       toggle() {
         this.$emit('toggle')
