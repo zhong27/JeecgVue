@@ -33,7 +33,7 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button v-has="'people:button'" @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button v-has="'people:button'" @click="changePayStatus" type="primary" icon="check">支付订单</a-button>
+      <a-button v-has="'people:button'" @click="changePayStatus" type="primary" icon="pay-circle">订单结算</a-button>
       <a-button v-has="'people:button'" type="primary" icon="download" @click="handleExportXls('订单预定')">导出</a-button>
       <!--
             <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"

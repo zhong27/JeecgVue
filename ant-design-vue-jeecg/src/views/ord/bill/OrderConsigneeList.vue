@@ -2,7 +2,7 @@
   <a-card :bordered="false" :class="'cust-erp-sub-tab'">
     <!-- 操作按钮区域 -->
     <div class="table-operator" v-if="mainId">
-      <a-button v-has="'people:button'" @click="handleAdd" type="primary" icon="plus">新增</a-button>
+      <!--<a-button v-has="'people:button'" @click="handleAdd" type="primary" icon="plus">新增</a-button>-->
       <a-button v-has="'people:button'" type="primary" icon="download" @click="handleExportXls('收货人信息')">导出</a-button>
       <a-upload
         name="file"
@@ -11,16 +11,16 @@
         :headers="tokenHeader"
         :action="importExcelUrl"
         @change="handleImportExcel">
-          <a-button v-has="'people:button'" type="primary" icon="import">导入</a-button>
+          <!--<a-button v-has="'people:button'" type="primary" icon="import">导入</a-button>-->
       </a-upload>
       <!-- 高级查询区域 -->
       <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>
-      <a-dropdown v-if="selectedRowKeys.length > 0">
-        <a-menu slot="overlay">
-          <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
-        </a-menu>
-        <a-button v-has="'people:button'" style="margin-left: 8px"> 批量操作 <a-icon type="down" /></a-button>
-      </a-dropdown>
+      <!--<a-dropdown v-if="selectedRowKeys.length > 0">-->
+        <!--<a-menu slot="overlay">-->
+          <!--<a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>-->
+        <!--</a-menu>-->
+        <!--<a-button v-has="'people:button'" style="margin-left: 8px"> 批量操作 <a-icon type="down" /></a-button>-->
+      <!--</a-dropdown>-->
     </div>
 
     <!-- table区域-begin -->
@@ -63,13 +63,13 @@
           </a-button>
         </template>
 ·
-        <span slot="action" slot-scope="text, record">
-          <a v-has="'people:button'" @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical" />
-          <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-            <a v-has="'people:button'">删除</a>
-          </a-popconfirm>
-        </span>
+        <!--<span slot="action" slot-scope="text, record">-->
+          <!--<a v-has="'people:button'" @click="handleEdit(record)">编辑</a>-->
+          <!--<a-divider type="vertical" />-->
+          <!--<a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">-->
+            <!--<a v-has="'people:button'">删除</a>-->
+          <!--</a-popconfirm>-->
+        <!--</span>-->
 
       </a-table>
     </div>
@@ -165,14 +165,14 @@
             align:"center",
             dataIndex: 'email'
           },
-          {
-            title: '操作',
-            dataIndex: 'action',
-            align:"center",
-            fixed:"right",
-            width:147,
-            scopedSlots: { customRender: 'action' },
-          }
+          // {
+          //   title: '操作',
+          //   dataIndex: 'action',
+          //   align:"center",
+          //   fixed:"right",
+          //   width:147,
+          //   scopedSlots: { customRender: 'action' },
+          // }
         ],
         url: {
           list: "/ord/orderBill/listOrderConsigneeByMainId",

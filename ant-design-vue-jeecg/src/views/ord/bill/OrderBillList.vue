@@ -95,20 +95,23 @@
           <a-divider type="vertical" />
           <a v-has="'people:button'" @click="pickUpConfirm(record)" :disabled="record.billStatus === 'taking' ?false:true" >取件确认</a>
           <a-divider type="vertical" />
-          <a-dropdown>
-            <a v-has="'people:button'" class="ant-dropdown-link">更多 <a-icon type="down" /></a>
-            <a-menu slot="overlay">
-               <a-menu-item>
-              <a @click="handleEdit(record)">编辑</a>
-              </a-menu-item>
-              <a-menu-item>
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                  <a>删除</a>
-                </a-popconfirm>
-              </a-menu-item>
-            </a-menu>
+          <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
+                  <a v-has="'people:button'" >删除</a>
+          </a-popconfirm>
+          <!--<a-dropdown>-->
+           <!--<a v-has="'people:button'" class="ant-dropdown-link">更多 <a-icon type="down" /></a>-->
+            <!--<a-menu slot="overlay">-->
+               <!--<a-menu-item>-->
+              <!--<a @click="handleEdit(record)">编辑</a>-->
+              <!--</a-menu-item>-->
+              <!--<a-menu-item>-->
+                <!--<a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">-->
+                  <!--<a>删除</a>-->
+                <!--</a-popconfirm>-->
+              <!--</a-menu-item>-->
+            <!--</a-menu>-->
 
-          </a-dropdown>
+          <!--</a-dropdown>-->
         </span>
 
       </a-table>

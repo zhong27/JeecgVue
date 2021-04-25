@@ -18,7 +18,7 @@
           </a-col>
           <a-col :span="24">
             <a-form-item label="业务员" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-dict-select-tag type="list" v-decorator="['business', validatorRules.business]" :trigger-change="true" dictCode="man_business,name,id" placeholder="请选择业务员" />
+              <j-dict-select-tag type="list" v-decorator="['business', validatorRules.business]" :trigger-change="true" dictCode="man_business where del_flag = 0,name,id" placeholder="请选择业务员" />
             </a-form-item>
           </a-col>
           <!--<a-col :span="24">-->

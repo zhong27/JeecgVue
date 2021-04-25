@@ -87,11 +87,12 @@
 
         <span slot="action" slot-scope="text, record">
           <!--<a v-has="'people:button'" @click="handleEdit(record)">编辑</a>-->
-          <a v-has="'people:button'" @click="frozen(record)">冻结账户</a>
+          <a v-has="'people:button'" :disabled="record.accountStatus==='normal'?false:true" @click="frozen(record)">冻结账户</a>
           <a-divider type="vertical"/>
-          <a v-has="'people:button'" @click="normal(record)">解冻账户</a>
+          <a v-has="'people:button'" :disabled="record.accountStatus==='frozen'?false:true" @click="normal(record)">解冻账户</a>
           <a-divider type="vertical"/>
           <a-dropdown>
+
             <a v-has="'people:button'" class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
               <a-menu-item>
