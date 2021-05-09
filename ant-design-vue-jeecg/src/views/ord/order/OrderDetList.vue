@@ -4,15 +4,15 @@
     <div class="table-operator" v-if="mainId">
       <a-button v-has="'people:button'" @click="handleAdd" type="primary" icon="plus">新增明细</a-button>
       <a-button v-has="'people:button'" type="primary" icon="download" @click="handleExportXls('订单明细表')">导出</a-button>
-      <a-upload
-        name="file"
-        :showUploadList="false"
-        :multiple="false"
-        :headers="tokenHeader"
-        :action="importExcelUrl"
-        @change="handleImportExcel">
-          <a-button v-has="'people:button'" type="primary" icon="import">导入</a-button>
-      </a-upload>
+      <!--<a-upload-->
+        <!--name="file"-->
+        <!--:showUploadList="false"-->
+        <!--:multiple="false"-->
+        <!--:headers="tokenHeader"-->
+        <!--:action="importExcelUrl"-->
+        <!--@change="handleImportExcel">-->
+          <!--<a-button v-has="'people:button'" type="primary" icon="import">导入</a-button>-->
+      <!--</a-upload>-->
       <!-- 高级查询区域 -->
       <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>
       <a-dropdown v-if="selectedRowKeys.length > 0">

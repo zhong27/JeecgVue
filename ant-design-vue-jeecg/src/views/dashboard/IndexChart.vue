@@ -1,6 +1,6 @@
 <template>
   <div class="page-header-index-wide">
-    <div>
+    <a-row>
       <a-carousel arrows autoplay="true">
         <div
           slot="prevArrow"
@@ -23,52 +23,70 @@
         <div align="center">
           <img src="~@/assets/1.jpg"  width="1200" align="center" height="160">
         </div>
-
-
       </a-carousel>
-    </div>
+    </a-row>
 <!--
     <span>
       <img src="~@/assets/indexImg.jpg" :style="{ marginBottom: '24px' }"  width="550" align="right" height="420">
     </span>
 -->
 
-<!--
-    <a-row :gutter="24">
 
-      <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }" :align="center">
-        <chart-card :loading="loading" title="支付笔数" :total="6560 | NumberFormat">
-          <a-tooltip title="指标说明" slot="action">
-            <a-icon type="info-circle-o" />
-          </a-tooltip>
-          <div>
-            <mini-bar :height="40" />
-          </div>
-          <template slot="footer">转化率 <span>60%</span></template>
-        </chart-card>
-      </a-col>
-      <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }" :align="center">
-        <chart-card :loading="loading" title="运营活动效果" total="78%">
-          <a-tooltip title="指标说明" slot="action">
-            <a-icon type="info-circle-o" />
-          </a-tooltip>
-          <div>
-            <mini-progress color="rgb(19, 194, 194)" :target="80" :percentage="78" :height="8" />
-          </div>
-          <template slot="footer">
-            <trend flag="down" style="margin-right: 16px;">
-              <span slot="term">同周比</span>
-              12%
-            </trend>
-            <trend flag="up">
-              <span slot="term">日环比</span>
-              80%
-            </trend>
-          </template>
-        </chart-card>
+    <!--<a-row :gutter="24">-->
+      <!--<a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }" :align="center">-->
+        <!--<chart-card :loading="loading" title="支付笔数" :total="6560 | NumberFormat">-->
+          <!--<a-tooltip title="指标说明" slot="action">-->
+            <!--<a-icon type="info-circle-o" />-->
+          <!--</a-tooltip>-->
+          <!--<div>-->
+            <!--<mini-bar :height="40" />-->
+          <!--</div>-->
+          <!--<template slot="footer">转化率 <span>60%</span></template>-->
+        <!--</chart-card>-->
+      <!--</a-col>-->
+      <!--<a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }" :align="center">-->
+        <!--<chart-card :loading="loading" title="运营活动效果" total="78%">-->
+          <!--<a-tooltip title="指标说明" slot="action">-->
+            <!--<a-icon type="info-circle-o" />-->
+          <!--</a-tooltip>-->
+          <!--<div>-->
+            <!--<mini-progress color="rgb(19, 194, 194)" :target="80" :percentage="78" :height="8" />-->
+          <!--</div>-->
+          <!--<template slot="footer">-->
+            <!--<trend flag="down" style="margin-right: 16px;">-->
+              <!--<span slot="term">同周比</span>-->
+              <!--12%-->
+            <!--</trend>-->
+            <!--<trend flag="up">-->
+              <!--<span slot="term">日环比</span>-->
+              <!--80%-->
+            <!--</trend>-->
+          <!--</template>-->
+        <!--</chart-card>-->
+      <!--</a-col>-->
+    <!--</a-row>-->
+    <a-row :gutter="24">
+      <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }" >
       </a-col>
     </a-row>
--->
+    <div>
+
+    <a-card :bordered="false">
+      <a-row>
+        <a-col :sm="8" :xs="24">
+          <head-info title="成交数" :content="payNum " :bordered="true"/>
+        </a-col>
+        <a-col :sm="8" :xs="24">
+          <head-info title="成交量" :content="payWeight" :bordered="true"/>
+        </a-col>
+        <a-col :sm="8" :xs="24">
+          <head-info title="销售金额" :content="payMoney"/>
+        </a-col>
+      </a-row>
+    </a-card>
+
+    </div>
+
 
 <!--
     <a-card :loading="loading" :bordered="false" :body-style="{padding: '0'}">
@@ -109,7 +127,7 @@
 -->
 
     <a-row >
-      <a-col :span="24">..
+      <a-col :span="24">
         <a-card :loading="loading" :bordered="false" title="最近一周访问量统计" :style="{ marginTop: '24px' }">
           <a-row>
             <a-col :span="6">
@@ -158,6 +176,7 @@
 
   import Trend from '@/components/Trend'
   import { getLoginfo,getVisitInfo } from '@/api/api'
+  import { httpAction, getAction } from '@/api/manage'
 
   const rankList = []
   for (let i = 0; i < 7; i++) {
@@ -194,6 +213,9 @@
         center: null,
         rankList,
         barData,
+        payNum: '',
+        payWeight: '',
+        payMoney: '',
         loginfo:{},
         visitFields:['ip','visit'],
         visitInfo:[],
@@ -205,6 +227,7 @@
         this.loading = !this.loading
       }, 1000)
       this.initLogInfo();
+      this.saleInfo();
     },
     methods: {
       initLogInfo () {
@@ -223,6 +246,20 @@
              this.visitInfo = res.result;
            }
          })
+      },
+      saleInfo(){
+          var that =this
+          var params = {}
+          getAction("/ord/orderBooking/saleInfo",params).then((res)=>{
+            if(res.success){
+              that.payNum = res.result.num + ' '+ '单';
+              that.payWeight =res.result.weight + ' ' + '吨/t'
+              that.payMoney = res.result.money + ' ' + '元'
+              console.log("saleInfo",res)
+            }else{
+
+            }
+          });
       },
     }
   }

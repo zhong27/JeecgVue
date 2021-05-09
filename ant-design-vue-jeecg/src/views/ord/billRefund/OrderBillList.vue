@@ -90,12 +90,12 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
-          <a v-has="'people:button'" @click="refundBill(record)" :disabled="record.billStatus === 'refunding' ? true:false || record.billStatus === 'refunded' ?true:false" >退单</a>
-
-          <a-divider type="vertical" />
-          <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-            <a v-has="'people:button'">删除</a>
-          </a-popconfirm>
+          <!--<a v-has="'people:button'" @click="refundBill(record)" :disabled="record.billStatus === 'refunding' ? true:false || record.billStatus === 'refunded' ?true:false" >退单</a>-->
+           <a v-has="'people:button'" @click="returnConfirmation(record)" :disabled="record.billStatus === 'refunding' ?false:true" >退货确认</a>
+          <!--<a-divider type="vertical" />-->
+          <!--<a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">-->
+            <!--<a v-has="'people:button'">删除</a>-->
+          <!--</a-popconfirm>-->
           <!--<a-dropdown>-->
             <!--<a v-has="'people:button'" class="ant-dropdown-link">更多 <a-icon type="down" /></a>-->
             <!--<a-menu slot="overlay">-->
@@ -221,6 +221,7 @@
           exportXlsUrl: "/ord/orderBill/exportXls",
           importExcelUrl: "ord/orderBill/importExcel",
           refundBill: "cash/refund/refundBill",
+          returnConfirmation: "/ord/orderBill/returnConfirmation"
         },
         dictOptions:{
         },
@@ -267,6 +268,17 @@
         getAction(this.url.refundBill,id).then((res) =>{
           if (res.success){
             this.$message.success(res.message)
+          } else{
+            this.$message.error(res.message)
+          }
+        })
+      },
+      returnConfirmation(record){
+        var id = {id:record.id}
+        getAction(this.url.returnConfirmation,id).then((res) =>{
+          if (res.success){
+            this.$message.success(res.message)
+            this.loadData();
           } else{
             this.$message.error(res.message)
           }
