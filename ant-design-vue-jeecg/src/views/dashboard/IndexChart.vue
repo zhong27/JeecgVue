@@ -80,7 +80,7 @@
           <head-info title="成交量" :content="payWeight" :bordered="true"/>
         </a-col>
         <a-col :sm="8" :xs="24">
-          <head-info title="销售金额" :content="payMoney"/>
+          <head-info title="销售额" :content="payMoney"/>
         </a-col>
       </a-row>
     </a-card>
@@ -253,7 +253,7 @@
           getAction("/ord/orderBooking/saleInfo",params).then((res)=>{
             if(res.success){
               that.payNum = res.result.num + ' '+ '单';
-              that.payWeight =res.result.weight + ' ' + '吨/t'
+              that.payWeight =res.result.weight + ' ' + '吨'
               that.payMoney = res.result.money + ' ' + '元'
               console.log("saleInfo",res)
             }else{

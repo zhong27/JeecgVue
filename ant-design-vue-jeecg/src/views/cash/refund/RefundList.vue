@@ -49,7 +49,7 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <a-button v-has="'cash:check'" @click="refundGoods" type="primary">退货确认</a-button>
+      <!--<a-button v-has="'cash:check'" @click="refundGoods" type="primary">退货确认</a-button>-->
       <a-button v-has="'cash:check'" @click="refund" type="primary">退款审核</a-button>
       <a-button v-has="'people:button'" type="primary" icon="download" @click="handleExportXls('退款管理')">导出</a-button>
       <!--
