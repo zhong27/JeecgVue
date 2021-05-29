@@ -11,6 +11,11 @@
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="12">
+            <a-form-item label="订单编号">
+              <j-input placeholder="请输入订单编号" v-model="queryParam.orderNo" />
+            </a-form-item>
+          </a-col>
+          <a-col :xl="6" :lg="7" :md="8" :sm="12">
             <a-form-item label="司机">
               <j-dict-select-tag placeholder="请输入司机"  dictCode="man_driver where del_flag = 0,name,id" v-model="queryParam.driver" />
             </a-form-item>

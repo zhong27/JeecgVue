@@ -170,11 +170,11 @@
             align:"center",
             dataIndex: 'price'
           },
-          {
-            title:'数量',
-            align:"center",
-            dataIndex: 'num'
-          },
+          // {
+          //   title:'数量',
+          //   align:"center",
+          //   dataIndex: 'num'
+          // },
           {
             title:'重量',
             align:"center",

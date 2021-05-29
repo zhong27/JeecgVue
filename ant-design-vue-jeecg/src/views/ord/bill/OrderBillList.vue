@@ -9,6 +9,17 @@
               <j-search-select-tag placeholder="请选择客户" v-model="queryParam.customerId" dict="man_customer where del_flag = 0,customer_name,id"/>
             </a-form-item>
           </a-col>
+          <a-col :xl="6" :lg="7" :md="8" :sm="12">
+            <a-form-item label="提单编号">
+              <j-input placeholder="请输入提单编号" v-model="queryParam.billNo" />
+            </a-form-item>
+          </a-col>
+          <a-col :xl="6" :lg="7" :md="8" :sm="12">
+            <a-form-item label="订单编号">
+              <j-input placeholder="请输入订单编号" v-model="queryParam.orderNo" />
+            </a-form-item>
+          </a-col>
+
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="业务员">
               <j-search-select-tag placeholder="请选择业务员" v-model="queryParam.business" dict="man_business,name,id"/>
